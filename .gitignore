@@ -34,7 +34,4 @@ yarn-error.log*
 *.sln
 
 
-#ignorando configuracion
 
-config/
-env.js
