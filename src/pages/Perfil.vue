@@ -6,7 +6,6 @@
       <div class="col-12 col-md-8 q-pa-xs">
         <q-card class="my-card">
           <q-card-section>Editar mi usuario</q-card-section>
-
           <q-form id="editarUsuario" @submit.prevent="editar">
             <q-separator inset />
             <q-card-section>
@@ -89,17 +88,22 @@
                   :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
                 />
               </div>
-             
+
               <div class="col-12 col-xs-12 q-pa-xs">
                 <input type="hidden" name="estatus" :value="estatus" />
                 <input type="hidden" name="id_usuario" :value="formEditar.id_usuario" />
                 <input type="hidden" name="rol" :value="rol" />
-              </div>
-              &nbsp;
+              </div>&nbsp;
               <q-separator inset />&nbsp;
               <div class="col-6 col-xs-6 q-pa-xs">
                 <q-btn icon-right="send" label="Editar" type="submit" color="primary" />&nbsp;
-                <q-btn icon-right="cancel" label="Cancelar" type="submit" color="orange" to="/usuarios"/>
+                <q-btn
+                  icon-right="cancel"
+                  label="Cancelar"
+                  type="submit"
+                  color="orange"
+                  to="/usuarios"
+                />
               </div>
             </q-card-section>
           </q-form>
@@ -118,8 +122,8 @@ export default {
     return {
       formEditar: {},
       rut: "",
-      rol:"",
-      estatus:""
+      rol: "",
+      estatus: ""
     };
   },
   computed: {
@@ -132,7 +136,10 @@ export default {
     getId() {
       const id_usuario = this.$route.params.id_usuario;
       axios
-        .get("http://localhost/api_inventarioit/usuarios/getUsers?id_usuario=" + id_usuario)
+        .get(
+          "http://localhost/api_inventarioit/usuarios/getUsers?id_usuario=" +
+            id_usuario
+        )
         .then(res => {
           this.formEditar = res.data.response[0];
           this.rol = res.data.response[0].rol;
@@ -141,7 +148,6 @@ export default {
         });
     },
     editar() {
-
       const form = document.getElementById("editarUsuario");
       axios
         .post(
@@ -157,7 +163,7 @@ export default {
               icon: "warning",
               position: "bottom-right"
             });
-            this.$router.push('/inicio');
+            this.$router.push("/inicio");
           } else {
             this.$q.notify({
               message: "No se han detectado cambios",

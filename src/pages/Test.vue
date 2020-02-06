@@ -138,9 +138,6 @@
   </div>
 </template>
 
-
-
-
 <script>
 import axios from "axios";
 export default {
@@ -316,9 +313,8 @@ export default {
 
 <template>
   <div>
-  <q-form id="registrarUsuario" @submit.prevent="registrar">
-
-   <q-select
+    <q-form id="registrarUsuario" @submit.prevent="registrar">
+      <q-select
         filled
         v-model="model"
         :options="listar"
@@ -330,30 +326,27 @@ export default {
         map-options
         style="min-width: 250px; max-width: 300px"
       />
-      
 
-        <q-input type="text" :value="model" name="id_usuario" id="id_usuario"/>
+      <q-input type="text" :value="model" name="id_usuario" id="id_usuario" />
 
-       <q-btn icon-right="send" label="Registrar" type="submit" color="primary" />
-  </q-form>
+      <q-btn icon-right="send" label="Registrar" type="submit" color="primary" />
+    </q-form>
 
-<q-icon name="accessibility_new
+    <q-icon name="accessibility_new
 " class="cursor-pointer">
-          <q-popup-proxy v-model="showIconPicker">
-
-            <q-icon-picker
-              v-model="value"
-              :filter="value"
-              icon-set="material-icons"
-              tooltips
-              :pagination.sync="pagination"
-              style="height: 300px; width: 300px; background-color: white;"
-            />
-
-          </q-popup-proxy>
-        </q-icon>
+      <q-popup-proxy v-model="showIconPicker">
+        <q-icon-picker
+          v-model="value"
+          :filter="value"
+          icon-set="material-icons"
+          tooltips
+          :pagination.sync="pagination"
+          style="height: 300px; width: 300px; background-color: white;"
+        />
+      </q-popup-proxy>
+    </q-icon>
   </div>
-<!-- https://quasarframework.github.io/quasar-ui-qiconpicker/icons-->
+  <!-- https://quasarframework.github.io/quasar-ui-qiconpicker/icons-->
 </template>
 
 
@@ -371,8 +364,8 @@ export default {
       id_usuario: "",
       buscar: "",
       cantidad: "",
-      model:"",
-      nombres:""
+      model: "",
+      nombres: ""
     };
   },
   created() {
@@ -387,7 +380,9 @@ export default {
     getUser() {
       const token = JSON.parse(this.$q.localStorage.getItem("token"));
       axios
-        .get("http://localhost/api_inventarioit/usuarios/getUsers?token=" + token)
+        .get(
+          "http://localhost/api_inventarioit/usuarios/getUsers?token=" + token
+        )
         .then(res => {
           //console.log(res.data.data[0].id_usuario)
           this.id_usuario = res.data.response[0].id_usuario;
@@ -398,26 +393,33 @@ export default {
     },
     userList() {
       this.showLoading();
-      axios.get("http://localhost/api_inventarioit/usuarios/getUsers").then(res => {
-       // this.listar = res.data.response[0].id_usuario;
-       this.model="Seleccione"
-        
-        this.hideLoading();
-        //console.log(res);
-      });
+      axios
+        .get("http://localhost/api_inventarioit/usuarios/getUsers")
+        .then(res => {
+          // this.listar = res.data.response[0].id_usuario;
+          this.model = "Seleccione";
+
+          this.hideLoading();
+          //console.log(res);
+        });
     },
     buscarDatos() {
       axios
-        .post("http://localhost/api_inventarioit/usuarios/getUsers?buscar=" + this.buscar)
+        .post(
+          "http://localhost/api_inventarioit/usuarios/getUsers?buscar=" +
+            this.buscar
+        )
         .then(res => {
           this.listar = res.data.response;
           //console.log(res.data.response);
         });
     },
     cantidadRegistros() {
-      axios.get("http://localhost/api_inventarioit/usuarios/cantidadUsuarios").then(res => {
-        this.cantidad = res.data.response[0].cantidad;
-      });
+      axios
+        .get("http://localhost/api_inventarioit/usuarios/cantidadUsuarios")
+        .then(res => {
+          this.cantidad = res.data.response[0].cantidad;
+        });
     },
     showLoading() {
       this.$q.loading.show({
@@ -430,12 +432,16 @@ export default {
       });
     },
     registrar() {
-alert(this.model);
+      alert(this.model);
       const form = document.getElementById("registrarUsuario");
-      axios.post("http://localhost/api_inventarioit/usuarios/registrar_usuario",new FormData(form))
+      axios
+        .post(
+          "http://localhost/api_inventarioit/usuarios/registrar_usuario",
+          new FormData(form)
+        )
         .then(res => {
           this.respuesta = res.data.response;
-          if(this.respuesta=='success'){
+          if (this.respuesta == "success") {
             this.$q.notify({
               message: "Usuario Registrado",
               color: "teal-6",
@@ -443,8 +449,8 @@ alert(this.model);
               position: "bottom-right"
             });
             this.$router.push("/usuarios");
-          }else{
-             this.$q.notify({
+          } else {
+            this.$q.notify({
               message: "Error en le registro",
               color: "red-5",
               icon: "warning",
