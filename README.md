@@ -37,6 +37,6 @@ or,
 3) kill terminal
 4) npm install
 
-f it didn't worked,
+If it didn't worked,
 
 Try npm install --unsafe-perm
