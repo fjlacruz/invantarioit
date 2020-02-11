@@ -13,23 +13,24 @@
 
         <q-toolbar-title>Inventario TI 2.0</q-toolbar-title>
         <q-btn-dropdown flat style="color: primary" :label="usuario">
-      <q-list>
-        <q-item clickable v-close-popup :to="'/perfil/'+id_usuario">
-          <q-item-section>
+          <q-list>
+            <q-item clickable v-close-popup :to="'/perfil/'+id_usuario">
+              <q-item-section>
+                <q-item-label>
+                  <q-icon name="perm_contact_calendar" />Perfil
+                </q-item-label>
+              </q-item-section>
+            </q-item>
 
-            <q-item-label><q-icon name="perm_contact_calendar" /> Perfil</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable v-close-popup :to="'/cambiarClave/'+id_usuario">
-          <q-item-section>
-            <q-item-label><q-icon name="autorenew"/>&nbsp;Cambiar&nbsp;Clave</q-item-label>
-          </q-item-section>
-        </q-item>
-
-      </q-list>
-    </q-btn-dropdown>
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                 
+            <q-item clickable v-close-popup :to="'/cambiarClave/'+id_usuario">
+              <q-item-section>
+                <q-item-label>
+                  <q-icon name="autorenew" />&nbsp;Cambiar&nbsp;Clave
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <q-input type="hidden" :value="id_usuario"></q-input>
       </q-toolbar>
     </q-header>
@@ -46,6 +47,15 @@
             <q-item-label>Inicio</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item clickable tag="a" href="#" to="/mantenedores" v-if="this.rol==1">
+          <q-item-section avatar>
+            <q-icon name="build" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Mantenedores</q-item-label>
+          </q-item-section>
+        </q-item>
+
         <q-item clickable tag="a" href="#" to="/usuarios" v-if="this.rol==1">
           <q-item-section avatar>
             <q-icon name="supervisor_account" />
@@ -54,7 +64,7 @@
             <q-item-label>Usuarios</q-item-label>
           </q-item-section>
         </q-item>
-     
+
         <q-item clickable tag="a" href="#" @click="salir">
           <q-item-section avatar>
             <q-icon name="input" />
@@ -75,7 +85,7 @@
 
 <script>
 import axios from "axios";
-import env from '../config/env.js'
+import env from "../config/env.js";
 
 export default {
   name: "MyLayout",
@@ -108,9 +118,10 @@ export default {
     getUser() {
       const token = JSON.parse(this.$q.localStorage.getItem("token"));
       axios
-        .get(`${env.endpoint}/api_inventarioit/usuarios/getUsers?token=` + token)
+        .get(
+          `${env.endpoint}/api_inventarioit/usuarios/getUsers?token=` + token
+        )
         .then(res => {
-
           this.id_usuario = res.data.response[0].id_usuario;
           this.rol = res.data.response[0].rol;
           this.usuario = res.data.response[0].usuario;
