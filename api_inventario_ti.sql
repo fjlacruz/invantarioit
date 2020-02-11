@@ -2,10 +2,10 @@
 -- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 05-02-2020 a las 23:56:28
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 11-02-2020 a las 02:13:37
 -- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.1
+-- Versión de PHP: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,19 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `api_inventario_ti`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `n_ambientes`
+--
+
+CREATE TABLE `n_ambientes` (
+  `id_ambiente` int(11) NOT NULL,
+  `descripcion_ambiente` varchar(80) COLLATE utf8_bin NOT NULL,
+  `estatus` int(11) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -43,6 +56,127 @@ INSERT INTO `n_roles` (`id_rol`, `descripcion_rol`, `fecha_registro`) VALUES
 (2, 'Mantenedor', '2020-01-04 18:43:43'),
 (3, 'Consulta', '2020-01-04 18:43:56'),
 (4, 'Usuario de Equipo', '2020-01-10 13:27:34');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `n_servicios`
+--
+
+CREATE TABLE `n_servicios` (
+  `id_servicio` int(11) NOT NULL,
+  `descripcion_servicio` varchar(80) COLLATE utf8_bin NOT NULL,
+  `estatus` int(11) NOT NULL DEFAULT 1,
+  `feacha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `n_sitios`
+--
+
+CREATE TABLE `n_sitios` (
+  `id_sitio` int(11) NOT NULL,
+  `descripcion_sitio` varchar(50) COLLATE utf8_bin NOT NULL,
+  `estatus` int(11) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `n_tipo_servidor`
+--
+
+CREATE TABLE `n_tipo_servidor` (
+  `id_tipo_servidor` int(11) NOT NULL,
+  `tipo_servidor` varchar(80) COLLATE utf8_bin NOT NULL,
+  `estatus` int(11) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `n_tipo_software`
+--
+
+CREATE TABLE `n_tipo_software` (
+  `id_tipo_software` int(11) NOT NULL,
+  `descripcion_software` varchar(80) COLLATE utf8_bin NOT NULL,
+  `estatus` int(11) NOT NULL DEFAULT 1,
+  `feacha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `t_asignacion_equipos`
+--
+
+CREATE TABLE `t_asignacion_equipos` (
+  `id_asignacion_equipo` int(11) NOT NULL,
+  `id_servidor_software` int(11) NOT NULL,
+  `fecha_asignacion` timestamp NOT NULL DEFAULT current_timestamp(),
+  `estatus` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `t_servidores`
+--
+
+CREATE TABLE `t_servidores` (
+  `id_servidor` int(11) NOT NULL,
+  `id_ambiente` int(11) NOT NULL,
+  `id_servicio` int(11) NOT NULL,
+  `nombre_servidor` varchar(150) COLLATE utf8_bin NOT NULL,
+  `ip_servidor` varchar(25) COLLATE utf8_bin NOT NULL,
+  `id_sitio` int(11) NOT NULL,
+  `id_tipo_servidor` int(11) NOT NULL,
+  `marca_servidor` varchar(80) COLLATE utf8_bin NOT NULL,
+  `modelo_servidor` varchar(90) COLLATE utf8_bin NOT NULL,
+  `nro_serie` varchar(80) COLLATE utf8_bin NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `estatus` int(11) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `t_servidor_software`
+--
+
+CREATE TABLE `t_servidor_software` (
+  `id_servidor_software` int(11) NOT NULL,
+  `id_software` int(11) NOT NULL,
+  `nro_licencia` varchar(50) COLLATE utf8_bin NOT NULL,
+  `proveedor_licencia` varchar(50) COLLATE utf8_bin NOT NULL,
+  `id_servidor` int(11) NOT NULL,
+  `fecha_compra` date NOT NULL,
+  `fecha_expiracion` date NOT NULL,
+  `estatus` int(11) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id_usuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `t_software`
+--
+
+CREATE TABLE `t_software` (
+  `id_software` int(11) NOT NULL,
+  `id_tipo_software` int(11) NOT NULL,
+  `nombre_software` varchar(100) COLLATE utf8_bin NOT NULL,
+  `version_software` varchar(20) COLLATE utf8_bin NOT NULL,
+  `estatus` int(11) NOT NULL DEFAULT 1,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -70,7 +204,7 @@ CREATE TABLE `t_usuarios` (
 --
 
 INSERT INTO `t_usuarios` (`id_usuario`, `nombres`, `apellidos`, `usuario`, `rut`, `clave`, `rol`, `email`, `telefono`, `token`, `estatus`, `fecha_registro`) VALUES
-(1, 'Javier', 'La Cruz', 'fjlacruz', '12345678', '25d55ad283aa400af464c76d713c07ad', 1, 'LTOMOCHE@GMAIL.COM', '56964174727', NULL, 1, '2020-01-04 18:54:44'),
+(1, 'Javier', 'La Cruz', 'jlacruz', '12345678', '25d55ad283aa400af464c76d713c07ad', 1, 'LTOMOCHE@GMAIL.COM', '56964174727', NULL, 1, '2020-01-04 18:54:44'),
 (102, 'Breanna', 'Vincent', 'Yuli', '13398910-2', '25d55ad283aa400af464c76d713c07ad', 2, 'eu@risusDonec.com', '1-583-174-4579', NULL, 1, '2020-01-09 23:58:54'),
 (103, 'Lacota', 'Shannon', 'Zephania', '35895544-4', '25d55ad283aa400af464c76d713c07ad', 3, 'ac.turpis@ligulaelit.edu', '220-3563', NULL, 1, '2020-01-09 23:58:54'),
 (104, 'Helen', 'Hansen', 'Mark', '15643811-1', '25d55ad283aa400af464c76d713c07ad', 1, 'orci.quis.lectus@enimSednulla.co.uk', '1-182-909-4260', NULL, 1, '2020-01-09 23:58:54'),
@@ -180,20 +314,90 @@ INSERT INTO `t_usuarios` (`id_usuario`, `nombres`, `apellidos`, `usuario`, `rut`
 --
 
 --
+-- Indices de la tabla `n_ambientes`
+--
+ALTER TABLE `n_ambientes`
+  ADD PRIMARY KEY (`id_ambiente`);
+
+--
 -- Indices de la tabla `n_roles`
 --
 ALTER TABLE `n_roles`
   ADD PRIMARY KEY (`id_rol`);
 
 --
+-- Indices de la tabla `n_servicios`
+--
+ALTER TABLE `n_servicios`
+  ADD PRIMARY KEY (`id_servicio`);
+
+--
+-- Indices de la tabla `n_sitios`
+--
+ALTER TABLE `n_sitios`
+  ADD PRIMARY KEY (`id_sitio`);
+
+--
+-- Indices de la tabla `n_tipo_servidor`
+--
+ALTER TABLE `n_tipo_servidor`
+  ADD PRIMARY KEY (`id_tipo_servidor`);
+
+--
+-- Indices de la tabla `n_tipo_software`
+--
+ALTER TABLE `n_tipo_software`
+  ADD PRIMARY KEY (`id_tipo_software`);
+
+--
+-- Indices de la tabla `t_asignacion_equipos`
+--
+ALTER TABLE `t_asignacion_equipos`
+  ADD PRIMARY KEY (`id_asignacion_equipo`),
+  ADD KEY `id_servidor_software` (`id_servidor_software`);
+
+--
+-- Indices de la tabla `t_servidores`
+--
+ALTER TABLE `t_servidores`
+  ADD PRIMARY KEY (`id_servidor`),
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_sitio` (`id_sitio`),
+  ADD KEY `id_ambiente` (`id_ambiente`),
+  ADD KEY `id_servicio` (`id_servicio`),
+  ADD KEY `id_tipo_servidor` (`id_tipo_servidor`);
+
+--
+-- Indices de la tabla `t_servidor_software`
+--
+ALTER TABLE `t_servidor_software`
+  ADD PRIMARY KEY (`id_servidor_software`),
+  ADD KEY `id_servidor` (`id_servidor`),
+  ADD KEY `id_software` (`id_software`);
+
+--
+-- Indices de la tabla `t_software`
+--
+ALTER TABLE `t_software`
+  ADD PRIMARY KEY (`id_software`),
+  ADD KEY `id_tipo_software` (`id_tipo_software`);
+
+--
 -- Indices de la tabla `t_usuarios`
 --
 ALTER TABLE `t_usuarios`
-  ADD PRIMARY KEY (`id_usuario`);
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD KEY `id_rol` (`rol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `n_ambientes`
+--
+ALTER TABLE `n_ambientes`
+  MODIFY `id_ambiente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `n_roles`
@@ -202,10 +406,92 @@ ALTER TABLE `n_roles`
   MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `n_servicios`
+--
+ALTER TABLE `n_servicios`
+  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `n_tipo_servidor`
+--
+ALTER TABLE `n_tipo_servidor`
+  MODIFY `id_tipo_servidor` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `n_tipo_software`
+--
+ALTER TABLE `n_tipo_software`
+  MODIFY `id_tipo_software` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `t_asignacion_equipos`
+--
+ALTER TABLE `t_asignacion_equipos`
+  MODIFY `id_asignacion_equipo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `t_servidores`
+--
+ALTER TABLE `t_servidores`
+  MODIFY `id_servidor` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `t_servidor_software`
+--
+ALTER TABLE `t_servidor_software`
+  MODIFY `id_servidor_software` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `t_software`
+--
+ALTER TABLE `t_software`
+  MODIFY `id_software` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `t_usuarios`
 --
 ALTER TABLE `t_usuarios`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=207;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `t_asignacion_equipos`
+--
+ALTER TABLE `t_asignacion_equipos`
+  ADD CONSTRAINT `id_servidor_software` FOREIGN KEY (`id_servidor_software`) REFERENCES `t_servidor_software` (`id_servidor_software`);
+
+--
+-- Filtros para la tabla `t_servidores`
+--
+ALTER TABLE `t_servidores`
+  ADD CONSTRAINT `id_ambiente` FOREIGN KEY (`id_ambiente`) REFERENCES `n_ambientes` (`id_ambiente`),
+  ADD CONSTRAINT `id_servicio` FOREIGN KEY (`id_servicio`) REFERENCES `n_servicios` (`id_servicio`),
+  ADD CONSTRAINT `id_sitio` FOREIGN KEY (`id_sitio`) REFERENCES `n_sitios` (`id_sitio`),
+  ADD CONSTRAINT `id_tipo_servidor` FOREIGN KEY (`id_tipo_servidor`) REFERENCES `n_tipo_servidor` (`id_tipo_servidor`),
+  ADD CONSTRAINT `id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `t_usuarios` (`id_usuario`),
+  ADD CONSTRAINT `usuario_id` FOREIGN KEY (`id_usuario`) REFERENCES `t_usuarios` (`id_usuario`);
+
+--
+-- Filtros para la tabla `t_servidor_software`
+--
+ALTER TABLE `t_servidor_software`
+  ADD CONSTRAINT `id_servidor` FOREIGN KEY (`id_servidor`) REFERENCES `t_servidores` (`id_servidor`),
+  ADD CONSTRAINT `id_software` FOREIGN KEY (`id_software`) REFERENCES `t_software` (`id_software`);
+
+--
+-- Filtros para la tabla `t_software`
+--
+ALTER TABLE `t_software`
+  ADD CONSTRAINT `id_tipo_software` FOREIGN KEY (`id_tipo_software`) REFERENCES `n_tipo_software` (`id_tipo_software`);
+
+--
+-- Filtros para la tabla `t_usuarios`
+--
+ALTER TABLE `t_usuarios`
+  ADD CONSTRAINT `id_rol` FOREIGN KEY (`rol`) REFERENCES `n_roles` (`id_rol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
