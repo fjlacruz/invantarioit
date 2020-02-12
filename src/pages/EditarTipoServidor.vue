@@ -4,27 +4,27 @@
     <div class="row justify-center">
       <div class="col-12 col-md-8 q-pa-xs">
         <q-card class="my-card">
-          <q-card-section>Editar Sitio</q-card-section>
-          <q-form id="editarSitio" @submit.prevent="editar">
-            <input type="hidden" name="id_sitio" :value="$route.params.id_sitio" />
+          <q-card-section>Editar Tipo de Servidor</q-card-section>
+          <q-form id="editarTipoServidor" @submit.prevent="editar">
+            <input type="hidden" name="id_tipo_servidor" :value="$route.params.id_tipo_servidor" />
             <q-separator inset />
             <q-card-section>
               <div class="col-12 col-xs-12 q-pa-xs">
                 <q-input
-                  v-model="formEditar.descripcion_sitio"
-                  name="descripcion_sitio"
-                  id="descripcion_sitio"
+                  v-model="formEditar.tipo_servidor"
+                  name="tipo_servidor"
+                  id="tipo_servidor"
                   filled
-                  hint="Descripcion sitio"
+                  hint="Tipo de Servidor"
                   dense="dense"
-                  :value="formEditar.descripcion_sitio"
+                  :value="formEditar.tipo_servidor"
                   lazy-rules
                   :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
                   ]"
                 />
               </div>
-              <div class="col-6 col-xs-6 q-pa-md">Estatus del Sitio</div>
+              <div class="col-6 col-xs-6 q-pa-md">Estatus del Tipo de Servidor</div>
               <div class="col-12 col-xs-12 q-pa-xs">
                 <div class="q-gutter-lg">
                   <q-radio
@@ -78,9 +78,9 @@ export default {
     return {
       tab: "sitios",
       formEditar: {},
-      id_sitio: "",
+      id_tipo_servidor: "",
       estatus: "",
-      descripcion_sitio: ""
+      tipo_servidor: ""
     };
   },
   computed: {
@@ -91,20 +91,21 @@ export default {
   },
   methods: {
     getId() {
-      const id_sitio = this.$route.params.id_sitio;
+      const id_tipo_servidor = this.$route.params.id_tipo_servidor;
       axios
         .get(
-          `${env.endpoint}/api_inventarioit/mantenedores/getSitios?id_sitio=` +
-            id_sitio
+          `${env.endpoint}/api_inventarioit/mantenedores/getTipoServidor?id_tipo_servidor=` +
+            id_tipo_servidor
         )
         .then(res => {
           this.formEditar = res.data.response[0];
-          this.id_sitio = res.data.response[0].id_sitio;
+          this.id_tipo_servidor = res.data.response[0].id_tipo_servidor;
+          this.tipo_servidor = res.data.response[0].tipo_servidor;
           this.estatus = res.data.response[0].estatus;
         });
     },
     editar() {
-      if (this.formEditar.descripcion_sitio == null) {
+      if (this.formEditar.tipo_servidor == null) {
         this.$q.notify({
           message: "Debe completar todos los campos del formulario",
           color: "red-5",
@@ -113,18 +114,18 @@ export default {
         });
       }
 
-      const form = document.getElementById("editarSitio");
+      const form = document.getElementById("editarTipoServidor");
 
       axios
         .post(
-          `${env.endpoint}/api_inventarioit/mantenedores/editarSitio`,
+          `${env.endpoint}/api_inventarioit/mantenedores/editarTipoServidor`,
           new FormData(form)
         )
         .then(res => {
           this.respuesta = res.data;
           if (res.data.response == "success") {
             this.$q.notify({
-              message: "Sitio editado",
+              message: "Tipo de Servidor editado",
               color: "teal-6",
               icon: "warning",
               position: "bottom-right"

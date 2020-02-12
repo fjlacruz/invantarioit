@@ -92,6 +92,86 @@ const routes = [
         component: () => import("pages/NuevoSitio")
       }
     ]
+  },
+  {
+    path: "/editarAmbiente/:id_ambiente",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/EditarAmbiente")
+      }
+    ]
+  },
+  {
+    path: "/nuevoAmbiente",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/NuevoAmbiente")
+      }
+    ]
+  },
+  {
+    path: "/editarServicio/:id_servicio",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/EditarServicio")
+      }
+    ]
+  },
+  {
+    path: "/nuevoServicio",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/NuevoServicio")
+      }
+    ]
+  },
+  {
+    path: "/editarTipoServidor/:id_tipo_servidor",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/EditarTipoServidor")
+      }
+    ]
+  },
+  {
+    path: "/nuevoTipoServidor",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/NuevoTipoServidor")
+      }
+    ]
+  },
+  {
+    path: "/editarTipoSoftware/:id_tipo_software",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/EditarTipoSoftware")
+      }
+    ]
+  },
+  {
+    path: "/nuevoTipoSoftware",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/NuevoTipoSoftware")
+      }
+    ]
   }
 ];
 

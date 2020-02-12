@@ -4,27 +4,26 @@
     <div class="row justify-center">
       <div class="col-12 col-md-8 q-pa-xs">
         <q-card class="my-card">
-          <q-card-section>Editar Sitio</q-card-section>
-          <q-form id="editarSitio" @submit.prevent="editar">
-            <input type="hidden" name="id_sitio" :value="$route.params.id_sitio" />
-            <q-separator inset />
+          <q-card-section>Registrar Ambiente</q-card-section>
+          <q-separator inset />
+          <q-form id="registrarAmbiente" @submit.prevent="registrar">
             <q-card-section>
               <div class="col-12 col-xs-12 q-pa-xs">
                 <q-input
-                  v-model="formEditar.descripcion_sitio"
-                  name="descripcion_sitio"
-                  id="descripcion_sitio"
+                  v-model="descripcion_ambiente"
+                  name="descripcion_ambiente"
+                  id="descripcion_ambiente"
                   filled
-                  hint="Descripcion sitio"
+                  hint="Descripcion Ambiente"
                   dense="dense"
-                  :value="formEditar.descripcion_sitio"
                   lazy-rules
                   :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
                   ]"
                 />
               </div>
-              <div class="col-6 col-xs-6 q-pa-md">Estatus del Sitio</div>
+
+              <div class="col-6 col-xs-6 q-pa-md">Estatus del Ambiente</div>
               <div class="col-12 col-xs-12 q-pa-xs">
                 <div class="q-gutter-lg">
                   <q-radio
@@ -47,17 +46,18 @@
                   />
                 </div>
                 <input type="hidden" name="estatus" :value="estatus" />
-              </div>&nbsp;
-              <q-separator inset />&nbsp;
-              <div class="col-6 col-xs-6 q-pa-xs">
-                <q-btn icon-right="send" label="Editar" type="submit" color="primary" />&nbsp;
-                <q-btn
-                  icon-right="cancel"
-                  label="Cancelar"
-                  type="submit"
-                  color="orange"
-                  to="/mantenedores"
-                />
+                &nbsp;&nbsp;&nbsp;
+                <q-separator inset />&nbsp;&nbsp;&nbsp;
+                <div class="col-6 col-xs-6 q-pa-xs">
+                  <q-btn icon-right="send" label="Registrar" type="submit" color="primary" />&nbsp;
+                  <q-btn
+                    icon-right="cancel"
+                    label="Cancelar"
+                    type="submit"
+                    color="orange"
+                    to="/mantenedores"
+                  />
+                </div>
               </div>
             </q-card-section>
           </q-form>
@@ -73,14 +73,11 @@ import axios from "axios";
 import env from "../config/env.js";
 
 export default {
-  name: "editar",
+  name: "registrarAmbiente",
   data() {
     return {
-      tab: "sitios",
-      formEditar: {},
-      id_sitio: "",
-      estatus: "",
-      descripcion_sitio: ""
+      descripcion_ambiente: "",
+      estatus: "1"
     };
   },
   computed: {
@@ -90,41 +87,18 @@ export default {
     }
   },
   methods: {
-    getId() {
-      const id_sitio = this.$route.params.id_sitio;
-      axios
-        .get(
-          `${env.endpoint}/api_inventarioit/mantenedores/getSitios?id_sitio=` +
-            id_sitio
-        )
-        .then(res => {
-          this.formEditar = res.data.response[0];
-          this.id_sitio = res.data.response[0].id_sitio;
-          this.estatus = res.data.response[0].estatus;
-        });
-    },
-    editar() {
-      if (this.formEditar.descripcion_sitio == null) {
-        this.$q.notify({
-          message: "Debe completar todos los campos del formulario",
-          color: "red-5",
-          icon: "warning",
-          position: "bottom-right"
-        });
-      }
-
-      const form = document.getElementById("editarSitio");
-
+    registrar() {
+      const form = document.getElementById("registrarAmbiente");
       axios
         .post(
-          `${env.endpoint}/api_inventarioit/mantenedores/editarSitio`,
+          `${env.endpoint}/api_inventarioit/mantenedores/registrar_ambiente`,
           new FormData(form)
         )
         .then(res => {
-          this.respuesta = res.data;
-          if (res.data.response == "success") {
+          this.respuesta = res.data.response;
+          if (this.respuesta == "success") {
             this.$q.notify({
-              message: "Sitio editado",
+              message: "Ambiente Registrado",
               color: "teal-6",
               icon: "warning",
               position: "bottom-right"
@@ -132,7 +106,7 @@ export default {
             this.$router.push("/mantenedores");
           } else {
             this.$q.notify({
-              message: "No se han detectado cambios",
+              message: "Error en le registro",
               color: "red-5",
               icon: "warning",
               position: "bottom-right"
@@ -141,9 +115,7 @@ export default {
         });
     }
   },
-  created() {
-    this.getId();
-  },
+  created() {},
   mixins: [sesion]
 };
 </script>

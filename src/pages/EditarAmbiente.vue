@@ -4,20 +4,20 @@
     <div class="row justify-center">
       <div class="col-12 col-md-8 q-pa-xs">
         <q-card class="my-card">
-          <q-card-section>Editar Sitio</q-card-section>
-          <q-form id="editarSitio" @submit.prevent="editar">
-            <input type="hidden" name="id_sitio" :value="$route.params.id_sitio" />
+          <q-card-section>Editar Ambiente</q-card-section>
+          <q-form id="editarAmbiente" @submit.prevent="editar">
+            <input type="hidden" name="id_ambiente" :value="$route.params.id_ambiente" />
             <q-separator inset />
             <q-card-section>
               <div class="col-12 col-xs-12 q-pa-xs">
                 <q-input
-                  v-model="formEditar.descripcion_sitio"
-                  name="descripcion_sitio"
-                  id="descripcion_sitio"
+                  v-model="formEditar.descripcion_ambiente"
+                  name="descripcion_ambiente"
+                  id="descripcion_ambiente"
                   filled
-                  hint="Descripcion sitio"
+                  hint="Descripcion Ambiente"
                   dense="dense"
-                  :value="formEditar.descripcion_sitio"
+                  :value="formEditar.descripcion_ambiente"
                   lazy-rules
                   :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
@@ -78,9 +78,9 @@ export default {
     return {
       tab: "sitios",
       formEditar: {},
-      id_sitio: "",
+      id_ambiente: "",
       estatus: "",
-      descripcion_sitio: ""
+      descripcion_ambiente: ""
     };
   },
   computed: {
@@ -91,20 +91,21 @@ export default {
   },
   methods: {
     getId() {
-      const id_sitio = this.$route.params.id_sitio;
+      const id_ambiente = this.$route.params.id_ambiente;
       axios
         .get(
-          `${env.endpoint}/api_inventarioit/mantenedores/getSitios?id_sitio=` +
-            id_sitio
+          `${env.endpoint}/api_inventarioit/mantenedores/getAmbientes?id_ambiente=` +
+            id_ambiente
         )
         .then(res => {
           this.formEditar = res.data.response[0];
-          this.id_sitio = res.data.response[0].id_sitio;
+          this.id_ambiente = res.data.response[0].id_ambiente;
+          this.descripcion_ambiente = res.data.response[0].descripcion_ambiente;
           this.estatus = res.data.response[0].estatus;
         });
     },
     editar() {
-      if (this.formEditar.descripcion_sitio == null) {
+      if (this.formEditar.descripcion_ambiente == null) {
         this.$q.notify({
           message: "Debe completar todos los campos del formulario",
           color: "red-5",
@@ -113,18 +114,18 @@ export default {
         });
       }
 
-      const form = document.getElementById("editarSitio");
+      const form = document.getElementById("editarAmbiente");
 
       axios
         .post(
-          `${env.endpoint}/api_inventarioit/mantenedores/editarSitio`,
+          `${env.endpoint}/api_inventarioit/mantenedores/editarAmbiente`,
           new FormData(form)
         )
         .then(res => {
           this.respuesta = res.data;
           if (res.data.response == "success") {
             this.$q.notify({
-              message: "Sitio editado",
+              message: "Ambiente editado",
               color: "teal-6",
               icon: "warning",
               position: "bottom-right"
