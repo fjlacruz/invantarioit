@@ -219,7 +219,69 @@
             </q-card-section>
           </q-tab-panel>
           <q-tab-panel name="software">
-            <div class="text-h6">Movies</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <q-card-section>
+              <div class="col-12 col-xs-12 q-pa-xs">
+                <table class="q-table">
+                  <thead>
+                    <tr>
+                      <th class="text-left">Nombre del Software/Version</th>
+                      <th class="text-left">Tipo de Software</th>
+                      <th class="text-left">Proveedor/Contacto</th>
+                      <th class="text-left">Contacto</th>
+                      <th class="text-left">Expiracion</th>
+                      <th class="text-left">Estatus</th>
+                      <th class="text-left">Editar</th>
+                    </tr>
+                  </thead>
+                  <tbody v-for="item in listarSoftware" :key="item.id_software">
+                    <tr>
+                      <td class="text-left">{{ item.nombre_software}} / {{ item.version_software}}</td>
+                      <td class="text-left">{{ item.descripcion_software}}</td>
+                      <td class="text-left">{{ item.proveedor}}</td>
+                      <td class="text-left">{{ item.contacto}}</td>
+                      <td class="text-left" v-if="item.vencimiento >=20">
+                        <q-badge color="green">{{ item.vencimiento}} Dias</q-badge>
+                      </td>
+                      <td class="text-left" v-else-if="item.vencimiento<=10">
+                        <q-badge color="red">{{ item.vencimiento}} Dias</q-badge>
+                      </td>
+                      <td class="text-left" v-else>
+                        <q-badge color="orange">{{ item.vencimiento}} Dias</q-badge>
+                      </td>
+                      <td class="text-left" v-if="item.estatus=='1'">
+                        <q-radio color="green" />
+                        <q-tooltip>Activo</q-tooltip>
+                      </td>
+                      <td class="text-left" v-else>
+                        <q-radio color="red" />
+                        <q-tooltip>Inactivo</q-tooltip>
+                      </td>
+                      <td class="text-left">
+                        <q-btn
+                          round
+                          color="primary"
+                          icon="edit"
+                          size="xs"
+                          :to="'/editarSoftware/'+item.id_software"
+                          href="#"
+                        />
+                        <q-tooltip>Editar</q-tooltip>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <q-separator inset />&nbsp;
+                <div class="col-12 col-md-4 q-pa-xs justify-left">
+                  <q-btn
+                    icon-right="send"
+                    label="Agregar Nuevo Software"
+                    type="submit"
+                    color="primary"
+                    :to="'/nuevoSoftware/'"
+                  />&nbsp;
+                </div>
+              </div>
+            </q-card-section>
           </q-tab-panel>
           <q-tab-panel name="tipoSoftware">
             <q-card-section>
@@ -290,7 +352,10 @@ export default {
       listarSitios: [],
       listarAmbientes: [],
       listarServicios: [],
-      listarTipoServidores: []
+      listarTipoServidores: [],
+      listarTipoSoftware: [],
+      listarSoftware: [],
+      vencimiento: ""
     };
   },
   created() {
@@ -299,6 +364,8 @@ export default {
     this.listaServicios();
     this.listaTipoServidores();
     this.listaTipoSoftware();
+    this.listaSoftware();
+    this.calcularExpiracion();
     const token = JSON.parse(this.$q.localStorage.getItem("token"));
   },
   methods: {
@@ -329,7 +396,7 @@ export default {
         .get(`${env.endpoint}/api_inventarioit/mantenedores/getServicios`)
         .then(res => {
           this.listarServicios = res.data.response;
-          console.log(this.listarServicios);
+          //console.log(this.listarServicios);
           this.hideLoading();
         });
     },
@@ -349,7 +416,20 @@ export default {
         .get(`${env.endpoint}/api_inventarioit/mantenedores/getTipoSoftware`)
         .then(res => {
           this.listarTipoSoftware = res.data.response;
-          console.log(this.listarTipoSoftware);
+          //console.log(this.listarTipoSoftware);
+          this.hideLoading();
+        });
+    },
+    listaSoftware() {
+      this.showLoading();
+      axios
+        .get(`${env.endpoint}/api_inventarioit/mantenedores/getSoftware`)
+        .then(res => {
+          this.listarSoftware = res.data.response;
+          this.fecha_expiracion = res.data.response.map(
+            item => item.fecha_expiracion
+          );
+          //console.log(this.fecha_expiracion);
           this.hideLoading();
         });
     },

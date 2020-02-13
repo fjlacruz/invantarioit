@@ -172,6 +172,27 @@ const routes = [
         component: () => import("pages/NuevoTipoSoftware")
       }
     ]
+  },
+
+  {
+    path: "/nuevoSoftware",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/NuevoSoftware")
+      }
+    ]
+  },
+  {
+    path: "/editarSoftware/:id_software",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/EditarSoftware")
+      }
+    ]
   }
 ];
 
