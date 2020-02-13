@@ -59,14 +59,14 @@
                     val => (val && val.length > 0) || 'Campo Obligatorio'
                   ]"
                   />
+                  <input
+                    type="hidden"
+                    v-model="model"
+                    name="id_tipo_servidor"
+                    id="id_tipo_servidor"
+                  />
                 </div>
 
-                <input
-                  type="hidden"
-                  :value="formEditar.id_tipo_servidor"
-                  name="id_tipo_servidor"
-                  id="id_tipo_servidor"
-                />
                 <div class="col-6 col-xs-6 q-pa-xs">
                   <q-select
                     filled
@@ -84,12 +84,7 @@
                   />
                 </div>
 
-                <input
-                  type="hidden"
-                  :value="formEditar.id_ambiente"
-                  name="id_ambiente"
-                  id="id_ambiente"
-                />
+                <input type="hidden" name="id_ambiente" id="id_ambiente" v-model="modelAmb" />
               </div>
 
               <div class="row justify-center">
@@ -110,12 +105,7 @@
                   />
                 </div>
 
-                <input
-                  type="hidden"
-                  :value="formEditar.id_servicio"
-                  name="id_servicio"
-                  id="id_servicio"
-                />
+                <input type="hidden" v-model="modelSer" name="id_servicio" id="id_servicio" />
                 <div class="col-6 col-xs-6 q-pa-xs">
                   <q-select
                     filled
@@ -133,7 +123,7 @@
                   />
                 </div>
 
-                <input type="hidden" :value="formEditar.id_sitio" name="id_sitio" id="id_sitio" />
+                <input type="hidden" v-model="modelSit" name="id_sitio" id="id_sitio" />
               </div>
               <div class="row justify-center">
                 <div class="col-4 col-xs-4 q-pa-xs">
@@ -278,7 +268,11 @@ export default {
       listarAmb: [],
       listarSer: [],
       listarSit: [],
-      id_tipo_servidor: ""
+      id_tipo_servidor: "",
+      id_ambiente: "",
+      id_servicio: "",
+      id_sitio: "",
+      estatus: ""
     };
   },
   computed: {
@@ -299,9 +293,11 @@ export default {
           this.formEditar = res.data.response[0];
           this.id_servidor = res.data.response[0].id_servidor;
           this.estatus = res.data.response[0].estatus;
-          this.fecha_compra = res.data.response[0].fecha_compra;
-          this.fecha_expiracion = res.data.response[0].fecha_expiracion;
           this.id_tipo_servidor = res.data.response[0].id_tipo_servidor;
+          this.model = res.data.response[0].id_tipo_servidor;
+          this.modelAmb = res.data.response[0].id_ambiente;
+          this.modelSer = res.data.response[0].id_servicio;
+          this.modelSit = res.data.response[0].id_sitio;
         });
     },
     editar() {
@@ -337,16 +333,14 @@ export default {
         .get(`${env.endpoint}/api_inventarioit/mantenedores/getTipoServidor`)
         .then(res => {
           this.listar = res.data.response;
-          this.model = this.tipo_servidor = res.data.response[0].tipo_servidor;
         });
     },
+
     listaAmbientes() {
       axios
         .get(`${env.endpoint}/api_inventarioit/mantenedores/getAmbientes`)
         .then(res => {
           this.listarAmb = res.data.response;
-          this.modelAmb = this.descripcion_ambiente =
-            res.data.response[0].descripcion_ambiente;
         });
     },
     listaServicios() {
@@ -354,8 +348,6 @@ export default {
         .get(`${env.endpoint}/api_inventarioit/mantenedores/getServicios`)
         .then(res => {
           this.listarSer = res.data.response;
-          this.modelSer = this.descripcion_servicio =
-            res.data.response[0].descripcion_servicio;
         });
     },
     listaSitios() {
@@ -363,8 +355,6 @@ export default {
         .get(`${env.endpoint}/api_inventarioit/mantenedores/getSitios`)
         .then(res => {
           this.listarSit = res.data.response;
-          this.modelSit = this.descripcion_sitio =
-            res.data.response[0].descripcion_sitio;
         });
     }
   },
@@ -374,19 +364,6 @@ export default {
     this.listaAmbientes();
     this.listaServicios();
     this.listaSitios();
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1;
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-      dd = "0" + dd;
-    }
-    if (mm < 10) {
-      mm = "0" + mm;
-    }
-    var today = yyyy + "/" + mm + "/" + dd;
-    this.fecha_expiracion = res.data.response[0].fecha_expiracion;
-    this.fecha_compra = res.data.response[0].fecha_compra;
   },
   mixins: [sesion]
 };

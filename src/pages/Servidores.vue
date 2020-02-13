@@ -99,10 +99,10 @@
         </q-card-section>
       </form>
     </q-card>
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <!-- <q-page-sticky position="bottom-right" :offset="[18, 58]">
       <q-btn fab icon="add" color="primary" to="/NuevoUsuario" />
       <q-tooltip>Nuevo Usuario</q-tooltip>
-    </q-page-sticky>
+    </q-page-sticky>-->
   </div>
 </template>
 

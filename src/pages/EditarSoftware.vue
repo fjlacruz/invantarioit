@@ -61,12 +61,7 @@
                   />
                 </div>
 
-                <input
-                  type="hidden"
-                  :value="formEditar.id_tipo_software"
-                  name="id_tipo_software"
-                  id="id_tipo_software"
-                />
+                <input type="hidden" v-model="model" name="id_tipo_software" id="id_tipo_software" />
                 <div class="col-6 col-xs-6 q-pa-xs">
                   <q-input
                     v-model="formEditar.nro_licencia"
@@ -249,6 +244,7 @@ export default {
           this.fecha_compra = res.data.response[0].fecha_compra;
           this.fecha_expiracion = res.data.response[0].fecha_expiracion;
           this.id_tipo_software = res.data.response[0].id_tipo_software;
+          this.model = res.data.response[0].id_tipo_software;
         });
     },
     editar() {
@@ -293,8 +289,6 @@ export default {
         .get(`${env.endpoint}/api_inventarioit/mantenedores/getTipoSoftware`)
         .then(res => {
           this.listar = res.data.response;
-          this.model = this.descripcion_software =
-            res.data.response[0].descripcion_software;
         });
     }
   },
