@@ -1,12 +1,12 @@
 <template>
   <div class="q-pa-md">
-    <input type="hidden" name="id_usuario" id="id_usuario" required :value="id_usuario" />
+    <input type="hidden" name="id_servidor" id="id_servidor" required :value="id_servidor" />
     <div class="q-pa-xs"></div>
 
     <q-card class="my-card">
       <q-card-section class="text-h6">
         <div class="row">
-          <div class="col-12 col-md-4 q-pa-xs justify-left">Usuarios del Sistema</div>
+          <div class="col-12 col-md-4 q-pa-xs justify-left">Servidores</div>
           <div class="col-12 col-md-5 q-pa-xs">&nbsp;</div>
           <div class="col-12 col-md-3 q-pa-xs justify-right">
             <q-input
@@ -35,20 +35,35 @@
             <table class="q-table">
               <thead>
                 <tr>
-                  <th class="text-left">Nombres</th>
-                  <th class="text-left">Apellidos</th>
-                  <th class="text-left">RUT</th>
-                  <th class="text-left">Rol</th>
+                  <th class="text-left">Nombre del Servidor</th>
+                  <th class="text-left">IP</th>
+                  <th class="text-left">Tipo Servidor</th>
+                  <th class="text-left">Ambiente</th>
+                  <th class="text-left">Servicio</th>
+                  <th class="text-left">Sitio</th>
+                  <th class="text-left">Software</th>
                   <th class="text-left">Estatus</th>
                   <th class="text-left">Editar</th>
                 </tr>
               </thead>
-              <tbody v-for="item in listar" :key="item.id_usuario">
+              <tbody v-for="item in listar" :key="item.id_servidor">
                 <tr>
-                  <td class="text-left">{{ item.nombres}}</td>
-                  <td class="text-left">{{ item.apellidos}}</td>
-                  <td class="text-left">{{ item.rut}}</td>
-                  <td class="text-left">{{ item.descripcion_rol}}</td>
+                  <td class="text-left">{{ item.nombre_servidor}}</td>
+                  <td class="text-left">{{ item.ip_servidor}}</td>
+                  <td class="text-left">{{ item.tipo_servidor}}</td>
+                  <td class="text-left">{{ item.descripcion_ambiente}}</td>
+                  <td class="text-left">{{ item.descripcion_servicio}}</td>
+                  <td class="text-left">{{ item.descripcion_sitio}}</td>
+                  <td class="text-left" v-if="item.nombre_software">{{ item.nombre_software}}</td>
+                  <td class="text-left" v-else>
+                    <q-btn
+                      label="Asignar"
+                      outline
+                      size="sm"
+                      color="primary"
+                      :to="'/asignarSoftware/'+item.id_servidor"
+                    />
+                  </td>
                   <td class="text-left" v-if="item.estatus=='1'">
                     <q-radio color="green" />
                     <q-tooltip>Activo</q-tooltip>
@@ -63,7 +78,7 @@
                       color="primary"
                       icon="edit"
                       size="xs"
-                      :to="'/editarUsuario/'+item.id_usuario"
+                      :to="'/editarServidor/'+item.id_servidor"
                       href="#"
                     />
                     <q-tooltip>Editar</q-tooltip>
@@ -108,7 +123,7 @@ export default {
       respuesta: "",
       listar: [],
       userData: "",
-      id_usuario: "",
+      id_servidor: "",
       buscar: "",
       cantidad: "",
       delay: 0,
@@ -120,7 +135,7 @@ export default {
     };
   },
   created() {
-    this.userList();
+    this.listaServidores();
     this.getUser();
     this.buscarDatos();
     this.cantidadRegistros();
@@ -135,17 +150,17 @@ export default {
           `${env.endpoint}/api_inventarioit/usuarios/getUsers?token=` + token
         )
         .then(res => {
-          //console.log(res.data.data[0].id_usuario)
-          this.id_usuario = res.data.response[0].id_usuario;
+          //console.log(res.data.data[0].id_servidor)
+          this.id_servidor = res.data.response[0].id_servidor;
           this.rol = res.data.response[0].rol;
           this.usuario = res.data.response[0].usuario;
           this.token = res.data.response[0].token;
         });
     },
-    userList() {
+    listaServidores() {
       this.showLoading();
       axios
-        .get(`${env.endpoint}/api_inventarioit/usuarios/getUsers`)
+        .get(`${env.endpoint}/api_inventarioit/mantenedores/getServidor`)
         .then(res => {
           this.listar = res.data.response;
           this.hideLoading();
@@ -154,7 +169,7 @@ export default {
     buscarDatos() {
       axios
         .post(
-          `${env.endpoint}/api_inventarioit/usuarios/getUsers?buscar=` +
+          `${env.endpoint}/api_inventarioit/mantenedores/getServidor?buscar=` +
             this.buscar
         )
         .then(res => {
@@ -164,7 +179,7 @@ export default {
     },
     cantidadRegistros() {
       axios
-        .get(`${env.endpoint}/api_inventarioit/usuarios/cantidadUsuarios`)
+        .get(`${env.endpoint}/api_inventarioit/mantenedores/cantidadServidores`)
         .then(res => {
           this.cantidad = res.data.response[0].cantidad;
           this.endVal = res.data.response[0].cantidad;

@@ -8,66 +8,70 @@
           <q-separator inset />
           <q-form id="registrarSoftware" @submit.prevent="registrar">
             <q-card-section>
-              <div class="col-12 col-xs-12 q-pa-xs">
-                <q-input
-                  v-model="nombre_software"
-                  name="nombre_software"
-                  id="nombre_software"
-                  filled
-                  hint="Nombre Software"
-                  dense="dense"
-                  lazy-rules
-                  :rules="[
+              <div class="row justify-center">
+                <div class="col-6 col-xs-6 q-pa-xs">
+                  <q-input
+                    v-model="nombre_software"
+                    name="nombre_software"
+                    id="nombre_software"
+                    filled
+                    hint="Nombre Software"
+                    dense="dense"
+                    lazy-rules
+                    :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
                   ]"
-                />
+                  />
+                </div>
+                <div class="col-6 col-xs-6 q-pa-xs">
+                  <q-input
+                    v-model="version_software"
+                    name="version_software"
+                    id="version_software"
+                    filled
+                    hint="Version Software"
+                    dense="dense"
+                    lazy-rules
+                    :rules="[
+                    val => (val && val.length > 0) || 'Campo Obligatorio'
+                  ]"
+                  />
+                </div>
               </div>
-              <div class="col-12 col-xs-12 q-pa-xs">
-                <q-input
-                  v-model="version_software"
-                  name="version_software"
-                  id="version_software"
-                  filled
-                  hint="Version Software"
-                  dense="dense"
-                  lazy-rules
-                  :rules="[
+              <div class="row justify-center">
+                <div class="col-6 col-xs-6 q-pa-xs">
+                  <q-select
+                    filled
+                    v-model="model"
+                    :options="listar"
+                    option-value="id_tipo_software"
+                    option-label="descripcion_software"
+                    name="model"
+                    id="model"
+                    emit-value
+                    map-options
+                    dense="dense"
+                    hint="Tipo de Software"
+                    :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
                   ]"
-                />
-              </div>
-              <div class="col-12 col-xs-12 q-pa-xs">
-                <q-select
-                  filled
-                  v-model="model"
-                  :options="listar"
-                  option-value="id_tipo_software"
-                  option-label="descripcion_software"
-                  name="model"
-                  id="model"
-                  emit-value
-                  map-options
-                  dense="dense"
-                  hint="Tipo de Software"
-                  :rules="[
+                  />
+                </div>
+                <input type="hidden" :value="model" name="id_tipo_software" id="id_tipo_software" />
+                <div class="col-6 col-xs-6 q-pa-xs">
+                  <q-input
+                    v-model="nro_licencia"
+                    name="nro_licencia"
+                    id="nro_licencia"
+                    filled
+                    hint="Licencia"
+                    dense="dense"
+                    lazy-rules
+                    :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
                   ]"
-                />
-              </div>
-              <input type="hidden" :value="model" name="id_tipo_software" id="id_tipo_software" />
-              <div class="col-12 col-xs-12 q-pa-xs">
-                <q-input
-                  v-model="nro_licencia"
-                  name="nro_licencia"
-                  id="nro_licencia"
-                  filled
-                  hint="Licencia"
-                  dense="dense"
-                  lazy-rules
-                  :rules="[
-                    val => (val && val.length > 0) || 'Campo Obligatorio'
-                  ]"
-                />
+                  />
+                </div>
               </div>
               <div class="col-12 col-xs-12 q-pa-xs">
                 <q-input

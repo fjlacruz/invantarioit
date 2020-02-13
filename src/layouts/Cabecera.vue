@@ -47,6 +47,15 @@
             <q-item-label>Inicio</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item clickable tag="a" href="#" to="/servidores" v-if="this.rol==1">
+          <q-item-section avatar>
+            <q-icon name="backup" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Servidores</q-item-label>
+          </q-item-section>
+        </q-item>
+
         <q-item clickable tag="a" href="#" to="/mantenedores" v-if="this.rol==1">
           <q-item-section avatar>
             <q-icon name="build" />

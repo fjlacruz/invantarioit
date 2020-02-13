@@ -193,6 +193,26 @@ const routes = [
         component: () => import("pages/EditarSoftware")
       }
     ]
+  },
+  {
+    path: "/servidores",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/Servidores")
+      }
+    ]
+  },
+  {
+    path: "/editarServidor/:id_servidor",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/EditarServidor")
+      }
+    ]
   }
 ];
 

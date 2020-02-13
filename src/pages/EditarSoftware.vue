@@ -9,75 +9,79 @@
             <input type="hidden" name="id_software" :value="$route.params.id_software" />
             <q-separator inset />
             <q-card-section>
-              <div class="col-12 col-xs-12 q-pa-xs">
-                <q-input
-                  v-model="formEditar.nombre_software"
-                  name="nombre_software"
-                  id="nombre_software"
-                  filled
-                  hint="Nombre del Software"
-                  dense="dense"
-                  :value="formEditar.nombre_software"
-                  lazy-rules
-                  :rules="[
+              <div class="row justify-center">
+                <div class="col-6 col-xs-6 q-pa-xs">
+                  <q-input
+                    v-model="formEditar.nombre_software"
+                    name="nombre_software"
+                    id="nombre_software"
+                    filled
+                    hint="Nombre del Software"
+                    dense="dense"
+                    :value="formEditar.nombre_software"
+                    lazy-rules
+                    :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
                   ]"
-                />
-              </div>
-              <div class="col-12 col-xs-12 q-pa-xs">
-                <q-input
-                  v-model="formEditar.version_software"
-                  name="version_software"
-                  id="version_software"
-                  filled
-                  hint="Version del Software"
-                  dense="dense"
-                  :value="formEditar.version_software"
-                  lazy-rules
-                  :rules="[
+                  />
+                </div>
+                <div class="col-6 col-xs-6 q-pa-xs">
+                  <q-input
+                    v-model="formEditar.version_software"
+                    name="version_software"
+                    id="version_software"
+                    filled
+                    hint="Version del Software"
+                    dense="dense"
+                    :value="formEditar.version_software"
+                    lazy-rules
+                    :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
                   ]"
-                />
+                  />
+                </div>
               </div>
-              <div class="col-12 col-xs-12 q-pa-xs">
-                <q-select
-                  filled
-                  v-model="model"
-                  :options="listar"
-                  option-value="id_tipo_software"
-                  option-label="descripcion_software"
-                  name="model"
-                  id="model"
-                  emit-value
-                  map-options
-                  dense="dense"
-                  hint="Tipo de Software"
-                  :rules="[
+              <div class="row justify-center">
+                <div class="col-6 col-xs-6 q-pa-xs">
+                  <q-select
+                    filled
+                    v-model="model"
+                    :options="listar"
+                    option-value="id_tipo_software"
+                    option-label="descripcion_software"
+                    name="model"
+                    id="model"
+                    emit-value
+                    map-options
+                    dense="dense"
+                    hint="Tipo de Software"
+                    :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
                   ]"
-                />
-              </div>
+                  />
+                </div>
 
-              <input
-                type="hidden"
-                :value="formEditar.id_tipo_software"
-                name="id_tipo_software"
-                id="id_tipo_software"
-              />
-              <div class="col-12 col-xs-12 q-pa-xs">
-                <q-input
-                  v-model="formEditar.nro_licencia"
-                  name="nro_licencia"
-                  id="nro_licencia"
-                  filled
-                  hint="Nro Licencia"
-                  dense="dense"
-                  :value="formEditar.nro_licencia"
-                  lazy-rules
-                  :rules="[
+                <input
+                  type="hidden"
+                  :value="formEditar.id_tipo_software"
+                  name="id_tipo_software"
+                  id="id_tipo_software"
+                />
+                <div class="col-6 col-xs-6 q-pa-xs">
+                  <q-input
+                    v-model="formEditar.nro_licencia"
+                    name="nro_licencia"
+                    id="nro_licencia"
+                    filled
+                    hint="Nro Licencia"
+                    dense="dense"
+                    :value="formEditar.nro_licencia"
+                    lazy-rules
+                    :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
                   ]"
-                />
+                  />
+                </div>
               </div>
               <div class="col-12 col-xs-12 q-pa-xs">
                 <q-input
@@ -109,50 +113,53 @@
                   ]"
                 />
               </div>
+              <div class="row justify-center">
+                <div class="col-6 col-xs-6 q-pa-xs">
+                  <q-input filled v-model="fecha_compra" mask="date" :rules="['fecha_compra']">
+                    <template v-slot:append>
+                      <q-badge color="primary">Fecha de Compra:</q-badge>
+                      <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy
+                          ref="qDateProxy"
+                          transition-show="scale"
+                          transition-hide="scale"
+                        >
+                          <q-date
+                            hint="Fecha de Compra"
+                            v-model="fecha_compra"
+                            @input="() => $refs.qDateProxy.hide()"
+                          />
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+                  </q-input>
+                </div>
 
-              <div class="col-6 col-xs-6 q-pa-xs">
-                <q-input filled v-model="fecha_compra" mask="date" :rules="['fecha_compra']">
-                  <template v-slot:append>
-                    <q-badge color="primary">Fecha de Compra:</q-badge>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        ref="qDateProxy"
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          hint="Fecha de Compra"
-                          v-model="fecha_compra"
-                          @input="() => $refs.qDateProxy.hide()"
-                        />
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
+                <div class="col-6 col-xs-6 q-pa-xs">
+                  <q-input
+                    filled
+                    v-model="fecha_expiracion"
+                    mask="date"
+                    :rules="['fecha_expiracion']"
+                  >
+                    <template v-slot:append>
+                      <q-badge color="primary">Fecha de Expiracion:</q-badge>
+                      <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy
+                          ref="qDateProxy"
+                          transition-show="scale"
+                          transition-hide="scale"
+                        >
+                          <q-date
+                            v-model="fecha_expiracion"
+                            @input="() => $refs.qDateProxy.hide()"
+                          />
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+                  </q-input>
+                </div>
               </div>
-
-              <div class="col-6 col-xs-6 q-pa-xs">
-                <q-input
-                  filled
-                  v-model="fecha_expiracion"
-                  mask="date"
-                  :rules="['fecha_expiracion']"
-                >
-                  <template v-slot:append>
-                    <q-badge color="primary">Fecha de Expiracion:</q-badge>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        ref="qDateProxy"
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date v-model="fecha_expiracion" @input="() => $refs.qDateProxy.hide()" />
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-              </div>
-
               <input type="hidden" name="fecha_compra" :value="fecha_compra" />
               <input type="hidden" name="fecha_expiracion" :value="fecha_expiracion" />
               <input type="hidden" name="id_software" :value="id_software" />
