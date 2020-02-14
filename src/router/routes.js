@@ -213,6 +213,26 @@ const routes = [
         component: () => import("pages/EditarServidor")
       }
     ]
+  },
+  {
+    path: "/nuevoServidor",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/NuevoServidor")
+      }
+    ]
+  },
+  {
+    path: "/asignarSoftwareServidor/:id_servidor",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/AsignarSoftwareServidor")
+      }
+    ]
   }
 ];
 

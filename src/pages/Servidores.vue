@@ -54,16 +54,17 @@
                   <td class="text-left">{{ item.descripcion_ambiente}}</td>
                   <td class="text-left">{{ item.descripcion_servicio}}</td>
                   <td class="text-left">{{ item.descripcion_sitio}}</td>
-                  <td class="text-left" v-if="item.nombre_software">{{ item.nombre_software}}</td>
-                  <td class="text-left" v-else>
+                  <td class="text-left">
                     <q-btn
-                      label="Asignar"
-                      outline
-                      size="sm"
+                      icon="visibility"
+                      round
+                      size="xs"
                       color="primary"
-                      :to="'/asignarSoftware/'+item.id_servidor"
+                      :to="'/asignarSoftwareServidor/'+item.id_servidor"
                     />
+                    <q-tooltip>Software</q-tooltip>
                   </td>
+
                   <td class="text-left" v-if="item.estatus=='1'">
                     <q-radio color="green" />
                     <q-tooltip>Activo</q-tooltip>
@@ -99,10 +100,10 @@
         </q-card-section>
       </form>
     </q-card>
-    <!-- <q-page-sticky position="bottom-right" :offset="[18, 58]">
-      <q-btn fab icon="add" color="primary" to="/NuevoUsuario" />
-      <q-tooltip>Nuevo Usuario</q-tooltip>
-    </q-page-sticky>-->
+    <q-page-sticky position="bottom-right" :offset="[18, 58]">
+      <q-btn fab icon="add" color="primary" to="/NuevoServidor" />
+      <q-tooltip>Nuevo Servidor</q-tooltip>
+    </q-page-sticky>
   </div>
 </template>
 
@@ -128,6 +129,7 @@ export default {
       cantidad: "",
       delay: 0,
       endVal: "",
+
       options: {
         useEasing: true,
         useGrouping: true
