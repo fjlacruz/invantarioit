@@ -365,7 +365,6 @@ export default {
     this.listaTipoServidores();
     this.listaTipoSoftware();
     this.listaSoftware();
-    this.calcularExpiracion();
     const token = JSON.parse(this.$q.localStorage.getItem("token"));
   },
   methods: {

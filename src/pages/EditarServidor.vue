@@ -275,12 +275,7 @@ export default {
       estatus: ""
     };
   },
-  computed: {
-    token() {
-      return JSON.parse(this.$q.localStorage.getItem("token"));
-      //console.log(token)
-    }
-  },
+
   methods: {
     getId() {
       const id_servidor = this.$route.params.id_servidor;

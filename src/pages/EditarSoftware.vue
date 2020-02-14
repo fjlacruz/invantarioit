@@ -220,15 +220,11 @@ export default {
       fecha_expiracion: "",
       model: "",
       listar: [],
-      id_tipo_software: ""
+      id_tipo_software: "",
+      token: ""
     };
   },
-  computed: {
-    token() {
-      return JSON.parse(this.$q.localStorage.getItem("token"));
-      //console.log(token)
-    }
-  },
+
   methods: {
     getId() {
       const id_software = this.$route.params.id_software;
@@ -239,6 +235,7 @@ export default {
         )
         .then(res => {
           this.formEditar = res.data.response[0];
+          console.log(this.formEditar);
           this.id_software = res.data.response[0].id_software;
           this.estatus = res.data.response[0].estatus;
           this.fecha_compra = res.data.response[0].fecha_compra;
@@ -295,6 +292,7 @@ export default {
   created() {
     this.getId();
     this.tipoSoftwareList();
+    this.token = JSON.parse(this.$q.localStorage.getItem("token"));
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1;
@@ -306,8 +304,6 @@ export default {
       mm = "0" + mm;
     }
     var today = yyyy + "/" + mm + "/" + dd;
-    this.fecha_expiracion = res.data.response[0].fecha_expiracion;
-    this.fecha_compra = res.data.response[0].fecha_compra;
   },
   mixins: [sesion]
 };

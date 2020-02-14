@@ -219,11 +219,7 @@ export default {
       model: ""
     };
   },
-  computed: {
-    token() {
-      return JSON.parse(this.$q.localStorage.getItem("token"));
-    }
-  },
+
   methods: {
     registrar() {
       if (this.model == "Seleccione") {
