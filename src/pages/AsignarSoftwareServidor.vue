@@ -85,7 +85,7 @@
         <q-card class="my-card">
           <q-card-section>Software alojados en el Servidor</q-card-section>
           <q-separator inset />
-          <q-card-section v-if="formEditar.sf>0">
+          <q-card-section v-if="verificacion!=''">
             <table class="q-table">
               <thead>
                 <tr>
@@ -156,7 +156,8 @@ export default {
       id_software: "",
       model: "",
       estatus: "",
-      sf: ""
+      sf: "",
+      verificacion: ""
     };
   },
 
@@ -170,7 +171,7 @@ export default {
         )
         .then(res => {
           this.formEditar = res.data.response[0];
-          console.log(this.formEditar);
+          //console.log(this.formEditar);
         });
     },
 
@@ -183,6 +184,8 @@ export default {
         )
         .then(res => {
           this.listarSoft = res.data.response;
+          this.verificacion = res.data.response;
+          console.log(this.verificacion);
         });
     },
 
