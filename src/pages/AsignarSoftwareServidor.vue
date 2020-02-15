@@ -124,7 +124,7 @@
                       color="red"
                       icon="cancel"
                       size="xs"
-                      :to="'/borrarServidorSoftware/'+lista.id_servidor"
+                      @click="eliminar(lista.id_servidor_software)"
                       href="#"
                     />
                     <q-tooltip>Borrar</q-tooltip>
@@ -157,7 +157,8 @@ export default {
       model: "",
       estatus: "",
       sf: "",
-      verificacion: ""
+      verificacion: "",
+      id_servidor_software: ""
     };
   },
 
@@ -225,6 +226,23 @@ export default {
             }
           });
       }
+    },
+    eliminar(id_servidor_software) {
+      axios
+        .post(
+          `${env.endpoint}/api_inventarioit/mantenedores/eliminarAsignacion?id_servidor_software=` +
+            id_servidor_software
+        )
+        .then(res => {
+          this.$q.notify({
+            message: "Asignacion Eliminada",
+            color: "teal-6",
+            icon: "warning",
+            position: "bottom-right"
+          });
+          //this.$router.push("/menuPrincipal");
+          this.getSoftwareServidor();
+        });
     },
 
     softwareList() {
