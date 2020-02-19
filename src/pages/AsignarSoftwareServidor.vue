@@ -56,6 +56,7 @@
                   map-options
                   dense="dense"
                   hint="Software"
+                  @blur="validarExisteSoftware"
                   :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
                   ]"
@@ -252,6 +253,29 @@ export default {
           this.listar = res.data.response;
           //console.log(this.listar);
           this.model = "Seleccione";
+        });
+    },
+    validarExisteSoftware() {
+      const formData = new FormData();
+      formData.append("id_software", this.id_software);
+      alert(formData.append("id_software", this.id_software));
+      return;
+      axios
+        .post(
+          `${env.endpoint}/api_inventarioit/usuarios/validarExisteRut`,
+          formData
+        )
+        .then(res => {
+          this.respuesta = res.data.response;
+          if (res.data.response === "success") {
+            this.$q.notify({
+              message: "RUT ya Registrado...!!!",
+              color: "red-5",
+              icon: "warning",
+              position: "bottom-right"
+            });
+            this.rut = "";
+          }
         });
     }
   },
