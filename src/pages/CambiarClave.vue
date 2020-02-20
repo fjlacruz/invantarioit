@@ -66,7 +66,13 @@
               <q-separator inset />&nbsp;
               <div class="col-6 col-xs-6 q-pa-xs">
                 <q-btn icon-right="send" label="Cambiar Calve" type="submit" color="primary" />&nbsp;
-                <q-btn icon-right="cancel" label="Cancelar" type="submit" color="orange" to="/inicio" />
+                <q-btn
+                  icon-right="cancel"
+                  label="Cancelar"
+                  type="submit"
+                  color="orange"
+                  to="/inicio"
+                />
               </div>
             </q-card-section>
           </q-form>
@@ -79,7 +85,7 @@
 <script>
 import sesion from "../mixins/sesion.js";
 import axios from "axios";
-import env from '../config/env.js' 
+import env from "../config/env.js";
 
 export default {
   name: "editar",
@@ -119,7 +125,7 @@ export default {
         const form = document.getElementById("editarUsuario");
         axios
           .post(
-            `${env.endpoint}/api_inventarioit/usuarios/editarUsuario`,
+            `${env.endpoint}/api_inventarioit/usuarios/cambiarClave`,
             new FormData(form)
           )
           .then(res => {

@@ -16,6 +16,7 @@
                   name="nombres"
                   id="nombres"
                   filled
+                  class="uppercase"
                   hint="Nombres"
                   dense="dense"
                   :value="formEditar.nombres"
@@ -28,6 +29,7 @@
                   v-model="formEditar.apellidos"
                   name="apellidos"
                   id="apellidos"
+                  class="uppercase"
                   filled
                   hint="Apellidos"
                   dense="dense"
@@ -43,6 +45,7 @@
                   id="rut"
                   filled
                   hint="Rut"
+                  class="uppercase"
                   dense="dense"
                   :value="formEditar.rut"
                   lazy-rules
@@ -55,6 +58,7 @@
                   v-model="formEditar.usuario"
                   name="usuario"
                   id="usuario"
+                  class="uppercase"
                   filled
                   hint="Usuario"
                   dense="dense"
@@ -71,7 +75,7 @@
                   filled
                   hint="Telefono"
                   dense="dense"
-                  mask="(+##) #-####-####" 
+                  mask="(+##) #-####-####"
                   :value="formEditar.telefono"
                   lazy-rules
                   :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
@@ -82,6 +86,7 @@
                   v-model="formEditar.email"
                   name="email"
                   id="email"
+                  class="uppercase"
                   filled
                   hint="Email"
                   dense="dense"
@@ -154,15 +159,19 @@
                     label="Inactivo"
                     :class="estatus"
                   />
-                 
                 </div>
                 <input type="hidden" name="estatus" :value="estatus" />
-              </div>
-              &nbsp;
+              </div>&nbsp;
               <q-separator inset />&nbsp;
               <div class="col-6 col-xs-6 q-pa-xs">
                 <q-btn icon-right="send" label="Editar" type="submit" color="primary" />&nbsp;
-                <q-btn icon-right="cancel" label="Cancelar" type="submit" color="orange" to="/usuarios"/>
+                <q-btn
+                  icon-right="cancel"
+                  label="Cancelar"
+                  type="submit"
+                  color="orange"
+                  to="/usuarios"
+                />
               </div>
             </q-card-section>
           </q-form>
@@ -175,7 +184,7 @@
 <script>
 import sesion from "../mixins/sesion.js";
 import axios from "axios";
-import env from '../config/env.js' 
+import env from "../config/env.js";
 
 export default {
   name: "editar",
@@ -183,8 +192,8 @@ export default {
     return {
       formEditar: {},
       rut: "",
-      rol:"",
-      estatus:""
+      rol: "",
+      estatus: ""
     };
   },
   computed: {
@@ -197,13 +206,15 @@ export default {
     getId() {
       const id_usuario = this.$route.params.id_usuario;
       axios
-        .get(`${env.endpoint}/api_inventarioit/usuarios/getUsers?id_usuario=` + id_usuario)
+        .get(
+          `${env.endpoint}/api_inventarioit/usuarios/getUsers?id_usuario=` +
+            id_usuario
+        )
         .then(res => {
           this.formEditar = res.data.response[0];
           this.rol = res.data.response[0].rol;
           this.estatus = res.data.response[0].estatus;
           //this.nombres = res.data.nombres[0].nombres;
-           
         });
     },
     editar() {
@@ -252,3 +263,8 @@ export default {
   mixins: [sesion]
 };
 </script>
+<style>
+.uppercase input {
+  text-transform: uppercase;
+}
+</style>

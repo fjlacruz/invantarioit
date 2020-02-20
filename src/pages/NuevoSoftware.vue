@@ -16,6 +16,7 @@
                     id="nombre_software"
                     filled
                     hint="Nombre Software"
+                    class="uppercase"
                     dense="dense"
                     lazy-rules
                     :rules="[
@@ -30,6 +31,7 @@
                     id="version_software"
                     filled
                     hint="Version Software"
+                    class="uppercase"
                     dense="dense"
                     lazy-rules
                     :rules="[
@@ -65,6 +67,7 @@
                     id="nro_licencia"
                     filled
                     hint="Licencia"
+                    class="uppercase"
                     dense="dense"
                     lazy-rules
                     :rules="[
@@ -78,6 +81,7 @@
                   v-model="proveedor"
                   name="proveedor"
                   id="proveedor"
+                  class="uppercase"
                   filled
                   hint="Proveedor"
                   dense="dense"
@@ -92,6 +96,7 @@
                   v-model="	contacto"
                   name="contacto"
                   id="contacto"
+                  class="uppercase"
                   filled
                   hint="Contacto"
                   dense="dense"
@@ -182,7 +187,7 @@
                     label="Cancelar"
                     type="submit"
                     color="orange"
-                    to="/mantenedores"
+                    to="/mantenedores/software"
                   />
                 </div>
               </div>
@@ -287,3 +292,8 @@ export default {
   mixins: [sesion]
 };
 </script>
+<style>
+.uppercase input {
+  text-transform: uppercase;
+}
+</style>

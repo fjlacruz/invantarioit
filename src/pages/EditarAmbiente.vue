@@ -17,6 +17,7 @@
                   filled
                   hint="Descripcion Ambiente"
                   dense="dense"
+                  class="uppercase"
                   :value="formEditar.descripcion_ambiente"
                   lazy-rules
                   :rules="[
@@ -56,7 +57,7 @@
                   label="Cancelar"
                   type="submit"
                   color="orange"
-                  to="/mantenedores"
+                  to="/mantenedores/ambientes"
                 />
               </div>
             </q-card-section>
@@ -148,3 +149,8 @@ export default {
   mixins: [sesion]
 };
 </script>
+<style>
+.uppercase input {
+  text-transform: uppercase;
+}
+</style>

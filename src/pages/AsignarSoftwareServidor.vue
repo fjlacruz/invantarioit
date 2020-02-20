@@ -257,6 +257,7 @@ export default {
     validarExisteSoftware() {
       const formData = new FormData();
       formData.append("model", this.model);
+      formData.append("id_servidor", this.$route.params.id_servidor);
 
       axios
         .post(

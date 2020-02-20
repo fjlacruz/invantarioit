@@ -14,6 +14,7 @@
                     v-model="nombre_servidor"
                     name="nombre_servidor"
                     id="nombre_servidor"
+                    class="uppercase"
                     filled
                     hint="Nombre del Servidor"
                     dense="dense"
@@ -142,6 +143,7 @@
                     filled
                     hint="Modelo"
                     dense="dense"
+                    class="uppercase"
                     lazy-rules
                     :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
@@ -156,6 +158,7 @@
                     filled
                     hint="Nro de Serie"
                     dense="dense"
+                    class="uppercase"
                     lazy-rules
                     :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
@@ -172,6 +175,7 @@
                     id="proveedor"
                     filled
                     hint="Proveedor"
+                    class="uppercase"
                     dense="dense"
                     lazy-rules
                     :rules="[
@@ -184,6 +188,7 @@
                     v-model="	contacto"
                     name="contacto"
                     id="contacto"
+                    class="uppercase"
                     filled
                     hint="Contacto"
                     dense="dense"
@@ -363,3 +368,8 @@ export default {
   mixins: [sesion]
 };
 </script>
+<style>
+.uppercase input {
+  text-transform: uppercase;
+}
+</style>

@@ -51,7 +51,7 @@
 
 <script>
 import axios from "axios";
-import env from '../config/env.js'
+import env from "../config/env.js";
 export default {
   name: "inicioSesion",
   data() {
@@ -65,7 +65,10 @@ export default {
       this.showLoading();
       const form = document.getElementById("inicioSesion");
       axios
-        .post(`${env.endpoint}/api_inventarioit/usuarios/userLogin/`, new FormData(form))
+        .post(
+          `${env.endpoint}/api_inventarioit/usuarios/userLogin/`,
+          new FormData(form)
+        )
         .then(res => {
           this.respuesta = res.data;
           //console.log(res.data); return;
@@ -73,7 +76,7 @@ export default {
           if (res.data.res == "success") {
             //this.$localStorage.set('token', JSON.stringify(res.data.token))
             this.$q.localStorage.set("token", JSON.stringify(res.data.token));
-            this.$router.push("inicio");
+            this.$router.push("servidores");
             this.hideLoading();
           } else {
             this.$q.notify({

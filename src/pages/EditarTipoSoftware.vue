@@ -16,6 +16,7 @@
                   id="descripcion_software"
                   filled
                   hint="Tipo de Software"
+                  class="uppercase"
                   dense="dense"
                   :value="formEditar.descripcion_software"
                   lazy-rules
@@ -56,7 +57,7 @@
                   label="Cancelar"
                   type="submit"
                   color="orange"
-                  to="/mantenedores"
+                  to="/mantenedores/tipoSoftware"
                 />
               </div>
             </q-card-section>
@@ -148,3 +149,9 @@ export default {
   mixins: [sesion]
 };
 </script>
+
+<style>
+.uppercase input {
+  text-transform: uppercase;
+}
+</style>

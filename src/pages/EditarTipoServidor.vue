@@ -14,6 +14,7 @@
                   v-model="formEditar.tipo_servidor"
                   name="tipo_servidor"
                   id="tipo_servidor"
+                  class="uppercase"
                   filled
                   hint="Tipo de Servidor"
                   dense="dense"
@@ -57,7 +58,7 @@
                   label="Cancelar"
                   type="submit"
                   color="orange"
-                  to="/mantenedores"
+                  to="/mantenedores/tipoServidores"
                 />
               </div>
             </q-card-section>
@@ -149,3 +150,8 @@ export default {
   mixins: [sesion]
 };
 </script>
+<style>
+.uppercase input {
+  text-transform: uppercase;
+}
+</style>

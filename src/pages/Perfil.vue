@@ -17,6 +17,7 @@
                   filled
                   hint="Nombres"
                   dense="dense"
+                  class="uppercase"
                   :value="formEditar.nombres"
                   lazy-rules
                   :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
@@ -29,6 +30,7 @@
                   id="apellidos"
                   filled
                   hint="Apellidos"
+                  class="uppercase"
                   dense="dense"
                   :value="formEditar.apellidos"
                   lazy-rules
@@ -57,6 +59,7 @@
                   filled
                   hint="Usuario"
                   dense="dense"
+                  class="uppercase"
                   :value="formEditar.usuario"
                   lazy-rules
                   :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
@@ -82,6 +85,7 @@
                   id="email"
                   filled
                   hint="Email"
+                  class="uppercase"
                   dense="dense"
                   :value="formEditar.email"
                   lazy-rules
@@ -181,3 +185,9 @@ export default {
   mixins: [sesion]
 };
 </script>
+
+<style>
+.uppercase input {
+  text-transform: uppercase;
+}
+</style>

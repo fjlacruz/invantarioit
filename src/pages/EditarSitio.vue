@@ -17,6 +17,7 @@
                   filled
                   hint="Descripcion sitio"
                   dense="dense"
+                  class="uppercase"
                   :value="formEditar.descripcion_sitio"
                   lazy-rules
                   :rules="[
@@ -57,7 +58,7 @@
                   label="Cancelar"
                   type="submit"
                   color="orange"
-                  to="/mantenedores"
+                  to="/mantenedores/sitios"
                 />
               </div>
             </q-card-section>
@@ -148,3 +149,8 @@ export default {
   mixins: [sesion]
 };
 </script>
+<style>
+.uppercase input {
+  text-transform: uppercase;
+}
+</style>

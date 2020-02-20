@@ -18,6 +18,7 @@
                     filled
                     hint="Nombre del Software"
                     dense="dense"
+                    class="uppercase"
                     :value="formEditar.nombre_software"
                     lazy-rules
                     :rules="[
@@ -31,6 +32,7 @@
                     name="version_software"
                     id="version_software"
                     filled
+                    class="uppercase"
                     hint="Version del Software"
                     dense="dense"
                     :value="formEditar.version_software"
@@ -67,6 +69,7 @@
                     v-model="formEditar.nro_licencia"
                     name="nro_licencia"
                     id="nro_licencia"
+                    class="uppercase"
                     filled
                     hint="Nro Licencia"
                     dense="dense"
@@ -85,6 +88,7 @@
                   id="proveedor"
                   filled
                   hint="Proveedor"
+                  class="uppercase"
                   dense="dense"
                   :value="formEditar.proveedor"
                   lazy-rules
@@ -100,6 +104,7 @@
                   id="contacto"
                   filled
                   hint="Contacto"
+                  class="uppercase"
                   dense="dense"
                   :value="formEditar.contacto"
                   lazy-rules
@@ -190,7 +195,7 @@
                   label="Cancelar"
                   type="submit"
                   color="orange"
-                  to="/mantenedores"
+                  to="/mantenedores/software"
                 />
               </div>
             </q-card-section>
@@ -308,3 +313,8 @@ export default {
   mixins: [sesion]
 };
 </script>
+<style>
+.uppercase input {
+  text-transform: uppercase;
+}
+</style>

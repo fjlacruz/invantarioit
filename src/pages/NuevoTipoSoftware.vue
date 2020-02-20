@@ -16,6 +16,7 @@
                   filled
                   hint="Tipo Software"
                   dense="dense"
+                  class="uppercase"
                   lazy-rules
                   :rules="[
                     val => (val && val.length > 0) || 'Campo Obligatorio'
@@ -55,7 +56,7 @@
                     label="Cancelar"
                     type="submit"
                     color="orange"
-                    to="/mantenedores"
+                    to="/mantenedores/tipoSoftware"
                   />
                 </div>
               </div>
@@ -119,3 +120,8 @@ export default {
   mixins: [sesion]
 };
 </script>
+<style>
+.uppercase input {
+  text-transform: uppercase;
+}
+</style>

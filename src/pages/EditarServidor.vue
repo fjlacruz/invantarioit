@@ -17,6 +17,7 @@
                     id="nombre_servidor"
                     filled
                     hint="Nombre del Servidor"
+                    class="uppercase"
                     dense="dense"
                     :value="formEditar.nombre_servidor"
                     lazy-rules
@@ -131,6 +132,7 @@
                     v-model="formEditar.marca_servidor"
                     name="marca_servidor"
                     id="marca_servidor"
+                    class="uppercase"
                     filled
                     hint="Marca"
                     dense="dense"
@@ -148,6 +150,7 @@
                     id="modelo_servidor"
                     filled
                     hint="Modelo"
+                    class="uppercase"
                     dense="dense"
                     :value="formEditar.modelo_servidor"
                     lazy-rules
@@ -163,6 +166,7 @@
                     id="nro_serie"
                     filled
                     hint="Nro de Serie"
+                    class="uppercase"
                     dense="dense"
                     :value="formEditar.nro_serie"
                     lazy-rules
@@ -363,3 +367,8 @@ export default {
   mixins: [sesion]
 };
 </script>
+<style>
+.uppercase input {
+  text-transform: uppercase;
+}
+</style>

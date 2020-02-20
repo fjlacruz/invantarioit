@@ -192,7 +192,7 @@ export default {
         )
         .then(res => {
           this.listar = res.data.response;
-          //console.log(res.data.response);
+          console.log(res.data.response);
         });
     },
     cantidadRegistros() {

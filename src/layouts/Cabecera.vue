@@ -39,14 +39,14 @@
       <q-list>
         <q-item-label header>Menu de Navegacion</q-item-label>
 
-        <q-item clickable tag="a" href="#" to="/inicio">
+        <!-- <q-item clickable tag="a" href="#" to="/inicio">
           <q-item-section avatar>
             <q-icon name="account_balance" />
           </q-item-section>
           <q-item-section>
             <q-item-label>Inicio</q-item-label>
           </q-item-section>
-        </q-item>
+        </q-item>-->
         <q-item clickable tag="a" href="#" to="/servidores" v-if="this.rol==1">
           <q-item-section avatar>
             <q-icon name="backup" />

@@ -5,8 +5,7 @@
       <div class="col-12 col-md-10 q-pa-xs">
         <q-card class="my-card">
           <q-card-section>Asignar Usuario a Servidor</q-card-section>
-          <q-form id="registrarAsignacion" @submit.prevent="validarExisteSoftware">
-            <input type="hidden" name="id_servidor" :value="$route.params.id_servidor" />
+          <q-form id="registrarAsignacion" @submit.prevent="validarExisteUsuario">
             <q-separator inset />
             <q-card-section>
               <div class="row justify-center">
@@ -62,6 +61,12 @@
                 />
 
                 <input type="hidden" :value="model" name="id_usuario" id="id_usuario" />
+                <input
+                  type="hidden"
+                  name="id_servidor"
+                  id="id_servidor"
+                  :value="$route.params.id_servidor"
+                />
               </div>&nbsp;
               <q-separator inset />&nbsp;
               <div class="col-6 col-xs-6 q-pa-xs">
@@ -103,7 +108,7 @@
                       color="red"
                       icon="cancel"
                       size="xs"
-                      @click="eliminar(lista.id_servidor_software)"
+                      @click="eliminar(lista.id_asignacion_equipo)"
                       href="#"
                     />
                     <q-tooltip>Borrar</q-tooltip>
@@ -137,7 +142,8 @@ export default {
       estatus: "",
       sf: "",
       verificacion: "",
-      id_servidor_software: ""
+      id_usuario: "",
+      id_servidor: ""
     };
   },
 
@@ -207,11 +213,11 @@ export default {
           });
       }
     },
-    eliminar(id_servidor_software) {
+    eliminar(id_asignacion_equipo) {
       axios
         .post(
-          `${env.endpoint}/api_inventarioit/mantenedores/eliminarAsignacion?id_servidor_software=` +
-            id_servidor_software
+          `${env.endpoint}/api_inventarioit/mantenedores/eliminarAsignacionusuario?id_asignacion_equipo=` +
+            id_asignacion_equipo
         )
         .then(res => {
           this.$q.notify({
@@ -234,18 +240,19 @@ export default {
           this.model = "Seleccione";
         });
     },
-    validarExisteSoftware() {
+    validarExisteUsuario() {
       const formData = new FormData();
       formData.append("model", this.model);
+      formData.append("id_servidor", this.$route.params.id_servidor);
 
       axios
         .post(
-          `${env.endpoint}/api_inventarioit/mantenedores/validarAsignacionSoftware`,
+          `${env.endpoint}/api_inventarioit/mantenedores/validarAsignacionUsuario`,
           formData
         )
         .then(res => {
           this.respuesta = res.data.response;
-          //console.log(this.respuesta);
+          console.log(this.respuesta);
           if (res.data.response === "success") {
             this.$q.notify({
               message: "Software ya Asignado...!!!",
