@@ -76,7 +76,7 @@ export default {
   name: "editar",
   data() {
     return {
-      tab: "sitios",
+      tab: "tipoSoftware",
       formEditar: {},
       id_tipo_software: "",
       estatus: "",
@@ -130,7 +130,7 @@ export default {
               icon: "warning",
               position: "bottom-right"
             });
-            this.$router.push("/mantenedores");
+            this.$router.push("/mantenedores/" + this.tab);
           } else {
             this.$q.notify({
               message: "No se han detectado cambios",

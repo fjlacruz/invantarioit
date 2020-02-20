@@ -35,21 +35,26 @@
             <table class="q-table">
               <thead>
                 <tr>
-                  <th class="text-left">Nombre del Servidor</th>
-                  <th class="text-left">IP</th>
-                  <th class="text-left">Tipo Servidor</th>
+                  <th class="text-left">Nombre</th>
+
+                  <th class="text-left">Tipo</th>
                   <th class="text-left">Ambiente</th>
                   <th class="text-left">Servicio</th>
                   <th class="text-left">Sitio</th>
                   <th class="text-left">Software</th>
+                  <th class="text-left">Usuario</th>
                   <th class="text-left">Estatus</th>
                   <th class="text-left">Editar</th>
                 </tr>
               </thead>
               <tbody v-for="item in listar" :key="item.id_servidor">
                 <tr>
-                  <td class="text-left">{{ item.nombre_servidor}}</td>
-                  <td class="text-left">{{ item.ip_servidor}}</td>
+                  <td class="text-left">
+                    {{ item.nombre_servidor}}
+                    <br />
+                    {{ item.ip_servidor}}
+                  </td>
+
                   <td class="text-left">{{ item.tipo_servidor}}</td>
                   <td class="text-left">{{ item.descripcion_ambiente}}</td>
                   <td class="text-left">{{ item.descripcion_servicio}}</td>
@@ -63,6 +68,17 @@
                       :to="'/asignarSoftwareServidor/'+item.id_servidor"
                     />
                     <q-tooltip>Software</q-tooltip>
+                  </td>
+
+                  <td class="text-left">
+                    <q-btn
+                      icon="transfer_within_a_station"
+                      round
+                      size="xs"
+                      color="primary"
+                      :to="'/asignarUsuarioServidor/'+item.id_servidor"
+                    />
+                    <q-tooltip>Usuario</q-tooltip>
                   </td>
 
                   <td class="text-left" v-if="item.estatus=='1'">

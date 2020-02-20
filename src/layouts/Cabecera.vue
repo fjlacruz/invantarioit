@@ -56,7 +56,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable tag="a" href="#" to="/mantenedores" v-if="this.rol==1">
+        <q-item clickable tag="a" href="#" to="/mantenedores/ambientes" v-if="this.rol==1">
           <q-item-section avatar>
             <q-icon name="build" />
           </q-item-section>

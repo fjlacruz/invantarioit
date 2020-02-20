@@ -338,9 +338,6 @@
   </div>
 </template>
 
-
-
-
 <script>
 import sesion from "../mixins/sesion.js";
 import axios from "axios";
@@ -348,7 +345,7 @@ import env from "../config/env.js";
 export default {
   data() {
     return {
-      tab: "ambientes",
+      tab: "",
       listarSitios: [],
       listarAmbientes: [],
       listarServicios: [],
@@ -365,9 +362,15 @@ export default {
     this.listaTipoServidores();
     this.listaTipoSoftware();
     this.listaSoftware();
+    this.tabs();
     const token = JSON.parse(this.$q.localStorage.getItem("token"));
+    tab: "servicios";
   },
   methods: {
+    tabs() {
+      const tab_activo = this.$route.params.tab;
+      this.tab = tab_activo;
+    },
     listaSitios() {
       this.showLoading();
       axios

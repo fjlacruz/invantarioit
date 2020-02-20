@@ -4,7 +4,7 @@
     <div class="row justify-center">
       <div class="col-12 col-md-10 q-pa-xs">
         <q-card class="my-card">
-          <q-card-section>Asignar Software a Servidor</q-card-section>
+          <q-card-section>Asignar Usuario a Servidor</q-card-section>
           <q-form id="registrarAsignacion" @submit.prevent="validarExisteSoftware">
             <input type="hidden" name="id_servidor" :value="$route.params.id_servidor" />
             <q-separator inset />
@@ -48,8 +48,8 @@
                   filled
                   v-model="model"
                   :options="listar"
-                  option-value="id_software"
-                  option-label="nombre_software"
+                  option-value="id_usuario"
+                  option-label="usuario"
                   name="model"
                   id="model"
                   emit-value
@@ -61,7 +61,7 @@
                   ]"
                 />
 
-                <input type="hidden" :value="model" name="id_software" id="id_software" />
+                <input type="hidden" :value="model" name="id_usuario" id="id_usuario" />
               </div>&nbsp;
               <q-separator inset />&nbsp;
               <div class="col-6 col-xs-6 q-pa-xs">
@@ -83,41 +83,20 @@
     <div class="row justify-center">
       <div class="col-12 col-md-10 q-pa-xs">
         <q-card class="my-card">
-          <q-card-section>Software alojados en el Servidor</q-card-section>
+          <q-card-section>Usuario Asignado al Servidor</q-card-section>
           <q-separator inset />
           <q-card-section v-if="verificacion!=''">
             <table class="q-table">
               <thead>
                 <tr>
-                  <th class="text-left">Software</th>
-                  <th class="text-left">Tipo</th>
-                  <th class="text-left">Expiracion</th>
-                  <th class="text-left">Estatus</th>
+                  <th class="text-left">usuario</th>
                   <th class="text-left">Borrar</th>
                 </tr>
               </thead>
               <tbody v-for="lista in listarSoft" :key="lista.id_servidor">
                 <tr>
-                  <td class="text-left">{{ lista.nombre_software}}</td>
-                  <td class="text-left">{{ lista.descripcion_software}}</td>
-                  <td class="text-left" v-if="lista.vencimiento >=20">
-                    <q-badge color="green">{{ lista.vencimiento}} Dias</q-badge>
-                  </td>
-                  <td class="text-left" v-else-if="lista.vencimiento<=10">
-                    <q-badge color="red">{{ lista.vencimiento}} Dias</q-badge>
-                  </td>
-                  <td class="text-left" v-else>
-                    <q-badge color="orange">{{ lista.vencimiento}} Dias</q-badge>
-                  </td>
+                  <td class="text-left">{{ lista.nombres}} {{ lista.apellidos}}</td>
 
-                  <td class="text-left" v-if="lista.estatus=='1'">
-                    <q-radio color="green" />
-                    <q-tooltip>Activo</q-tooltip>
-                  </td>
-                  <td class="text-left" v-else>
-                    <q-radio color="red" />
-                    <q-tooltip>Inactivo</q-tooltip>
-                  </td>
                   <td class="text-left">
                     <q-btn
                       round
@@ -133,7 +112,7 @@
               </tbody>
             </table>
           </q-card-section>
-          <q-card-section v-else>No Posee Software</q-card-section>
+          <q-card-section v-else>No Posee Usuario Asignado</q-card-section>
         </q-card>
       </div>
     </div>
@@ -153,7 +132,7 @@ export default {
       formEditar: {},
       listar: [],
       listarSoft: [],
-      id_software: "",
+      id_usuario: "",
       model: "",
       estatus: "",
       sf: "",
@@ -180,13 +159,14 @@ export default {
       const id_servidor = this.$route.params.id_servidor;
       axios
         .get(
-          `${env.endpoint}/api_inventarioit/mantenedores/getServidorSoftware?id_servidor=` +
+          `${env.endpoint}/api_inventarioit/mantenedores/verificarAsignacionUsuario?id_servidor=` +
             id_servidor
         )
         .then(res => {
           this.listarSoft = res.data.response;
           this.verificacion = res.data.response;
-          console.log(this.verificacion);
+
+          console.log(this.listarSoft);
         });
     },
 
@@ -202,14 +182,14 @@ export default {
         const form = document.getElementById("registrarAsignacion");
         axios
           .post(
-            `${env.endpoint}/api_inventarioit/mantenedores/registrar_servidorSoftware`,
+            `${env.endpoint}/api_inventarioit/mantenedores/registrarAsignacion`,
             new FormData(form)
           )
           .then(res => {
             this.respuesta = res.data.response;
             if (this.respuesta == "success") {
               this.$q.notify({
-                message: "Software Asignado",
+                message: "Usuario Asignado",
                 color: "teal-6",
                 icon: "warning",
                 position: "bottom-right"
@@ -245,9 +225,9 @@ export default {
         });
     },
 
-    softwareList() {
+    userList() {
       axios
-        .get(`${env.endpoint}/api_inventarioit/mantenedores/getSoftware`)
+        .get(`${env.endpoint}/api_inventarioit/usuarios/getUsersList`)
         .then(res => {
           this.listar = res.data.response;
           //console.log(this.listar);
@@ -265,7 +245,7 @@ export default {
         )
         .then(res => {
           this.respuesta = res.data.response;
-          console.log(this.respuesta);
+          //console.log(this.respuesta);
           if (res.data.response === "success") {
             this.$q.notify({
               message: "Software ya Asignado...!!!",
@@ -282,7 +262,7 @@ export default {
   },
   created() {
     this.getId();
-    this.softwareList();
+    this.userList();
     this.getSoftwareServidor();
   },
   mixins: [sesion]

@@ -130,7 +130,7 @@ export default {
               icon: "warning",
               position: "bottom-right"
             });
-            this.$router.push("/mantenedores");
+            this.$router.push("/mantenedores/ambientes");
           } else {
             this.$q.notify({
               message: "No se han detectado cambios",

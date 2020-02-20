@@ -47,6 +47,7 @@
                   />
                 </div>
                 <input type="hidden" name="estatus" :value="estatus" />
+                <input type="hidden" name="tab" id="tab" v-model="tab" />
               </div>&nbsp;
               <q-separator inset />&nbsp;
               <div class="col-6 col-xs-6 q-pa-xs">
@@ -76,7 +77,7 @@ export default {
   name: "editar",
   data() {
     return {
-      tab: "sitios",
+      tab: "tipoServidores",
       formEditar: {},
       id_tipo_servidor: "",
       estatus: "",
@@ -130,7 +131,7 @@ export default {
               icon: "warning",
               position: "bottom-right"
             });
-            this.$router.push("/mantenedores");
+            this.$router.push("/mantenedores/" + this.tab);
           } else {
             this.$q.notify({
               message: "No se han detectado cambios",

@@ -64,7 +64,7 @@ const routes = [
     ]
   },
   {
-    path: "/mantenedores",
+    path: "/mantenedores/:tab",
     component: () => import("layouts/Cabecera.vue"),
     children: [
       {
@@ -231,6 +231,16 @@ const routes = [
       {
         path: "",
         component: () => import("pages/AsignarSoftwareServidor")
+      }
+    ]
+  },
+  {
+    path: "/asignarUsuarioServidor/:id_servidor",
+    component: () => import("layouts/Cabecera.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/AsignarUsuarioServidor")
       }
     ]
   }
