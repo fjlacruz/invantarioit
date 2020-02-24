@@ -20,7 +20,9 @@
                   class="uppercase"
                   :value="formEditar.nombres"
                   lazy-rules
-                  :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
+                  :rules="[
+                    val => (val && val.length > 0) || 'Campo Obligatorio'
+                  ]"
                 />
               </div>
               <div class="col-12 col-xs-12 q-pa-xs">
@@ -34,7 +36,9 @@
                   dense="dense"
                   :value="formEditar.apellidos"
                   lazy-rules
-                  :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
+                  :rules="[
+                    val => (val && val.length > 0) || 'Campo Obligatorio'
+                  ]"
                 />
               </div>
               <div class="col-12 col-xs-12 q-pa-xs">
@@ -47,7 +51,9 @@
                   dense="dense"
                   :value="formEditar.rut"
                   lazy-rules
-                  :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
+                  :rules="[
+                    val => (val && val.length > 0) || 'Campo Obligatorio'
+                  ]"
                 />
               </div>
 
@@ -62,7 +68,9 @@
                   class="uppercase"
                   :value="formEditar.usuario"
                   lazy-rules
-                  :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
+                  :rules="[
+                    val => (val && val.length > 0) || 'Campo Obligatorio'
+                  ]"
                 />
               </div>
               <div class="col-12 col-xs-12 q-pa-xs">
@@ -75,7 +83,9 @@
                   dense="dense"
                   :value="formEditar.telefono"
                   lazy-rules
-                  :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
+                  :rules="[
+                    val => (val && val.length > 0) || 'Campo Obligatorio'
+                  ]"
                 />
               </div>
               <div class="col-12 col-xs-12 q-pa-xs">
@@ -89,18 +99,29 @@
                   dense="dense"
                   :value="formEditar.email"
                   lazy-rules
-                  :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
+                  :rules="[
+                    val => (val && val.length > 0) || 'Campo Obligatorio'
+                  ]"
                 />
               </div>
 
               <div class="col-12 col-xs-12 q-pa-xs">
                 <input type="hidden" name="estatus" :value="estatus" />
-                <input type="hidden" name="id_usuario" :value="formEditar.id_usuario" />
+                <input
+                  type="hidden"
+                  name="id_usuario"
+                  :value="formEditar.id_usuario"
+                />
                 <input type="hidden" name="rol" :value="rol" />
-              </div>&nbsp;
-              <q-separator inset />&nbsp;
+              </div>
+              &nbsp; <q-separator inset />&nbsp;
               <div class="col-6 col-xs-6 q-pa-xs">
-                <q-btn icon-right="send" label="Editar" type="submit" color="primary" />&nbsp;
+                <q-btn
+                  icon-right="send"
+                  label="Editar"
+                  type="submit"
+                  color="primary"
+                />&nbsp;
                 <q-btn
                   icon-right="cancel"
                   label="Cancelar"
@@ -120,6 +141,7 @@
 <script>
 import sesion from "../mixins/sesion.js";
 import axios from "axios";
+import env from "../config/env.js";
 export default {
   name: "editar",
   data() {
@@ -141,7 +163,7 @@ export default {
       const id_usuario = this.$route.params.id_usuario;
       axios
         .get(
-          "http://localhost/api_inventarioit/usuarios/getUsers?id_usuario=" +
+          `${env.endpoint}/api_inventarioit/usuarios/getUsers?id_usuario=` +
             id_usuario
         )
         .then(res => {
@@ -155,9 +177,10 @@ export default {
       const form = document.getElementById("editarUsuario");
       axios
         .post(
-          "http://localhost/api_inventarioit/usuarios/editarUsuario",
+          `${env.endpoint}/api_inventarioit/usuarios/editarUsuario`,
           new FormData(form)
         )
+
         .then(res => {
           this.respuesta = res.data;
           if (res.data.response == "success") {
