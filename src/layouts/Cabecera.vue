@@ -131,6 +131,7 @@ export default {
           `${env.endpoint}/api_inventarioit/usuarios/getUsers?token=` + token
         )
         .then(res => {
+          console.log(res.data);
           this.id_usuario = res.data.response[0].id_usuario;
           this.rol = res.data.response[0].rol;
           this.usuario = res.data.response[0].usuario;
