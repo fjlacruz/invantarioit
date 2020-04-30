@@ -20,7 +20,9 @@
                       lazy-rules
                       filled
                       dense="dense"
-                      :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
+                      :rules="[
+                        val => (val && val.length > 0) || 'Campo Obligatorio'
+                      ]"
                     />
                   </div>
                   <div class="col-12 col-md-12 q-pa-md">
@@ -33,11 +35,18 @@
                       lazy-rules
                       filled
                       dense="dense"
-                      :rules="[ val => val && val.length > 0 || 'Campo Obligatorio']"
+                      :rules="[
+                        val => (val && val.length > 0) || 'Campo Obligatorio'
+                      ]"
                     />
                   </div>
                   <div class="col-12 col-md-12 q-pa-md">
-                    <q-btn icon-right="send" label="Entrar" type="submit" color="primary" />
+                    <q-btn
+                      icon-right="send"
+                      label="Entrar"
+                      type="submit"
+                      color="primary"
+                    />
                   </div>
                 </div>
               </q-form>
@@ -110,4 +119,5 @@ export default {
     }
   }
 };
+// agregando test para dearrollo 2
 </script>
