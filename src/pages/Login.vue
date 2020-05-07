@@ -116,4 +116,5 @@ export default {
 };
 // agregando test para dearrollo 2
 //haciendo cambios desde test2
+//probando ci
 </script>
