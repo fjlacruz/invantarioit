@@ -41,12 +41,7 @@
                     />
                   </div>
                   <div class="col-12 col-md-12 q-pa-md">
-                    <q-btn
-                      icon-right="send"
-                      label="Entrar"
-                      type="submit"
-                      color="primary"
-                    />
+                    <q-btn icon-right="send" label="Entrar" type="submit" color="primary" />
                   </div>
                 </div>
               </q-form>
@@ -120,4 +115,5 @@ export default {
   }
 };
 // agregando test para dearrollo 2
+//haciendo cambios desde test2
 </script>
