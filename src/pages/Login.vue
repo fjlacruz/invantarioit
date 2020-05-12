@@ -119,4 +119,6 @@ export default {
 //probando ci
 //nuevos cambios con pull request
 //probando git lab
+//probando ci
+
 </script>
