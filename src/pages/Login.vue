@@ -121,5 +121,7 @@ export default {
 //probando git lab
 //probando ci
 
+//probando gitlab
+
 ///probando segunda ci con node js
 </script>
