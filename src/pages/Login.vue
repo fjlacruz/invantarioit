@@ -114,14 +114,5 @@ export default {
     }
   }
 };
-// agregando test para dearrollo 2
-
-//probando pull request
-
-
-///probando segunda ci con node js
-//probando pr
-
-//agregando pr
 
 </script>
