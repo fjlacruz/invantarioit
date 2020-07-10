@@ -6,7 +6,7 @@
 import sesion from "../mixins/sesion.js";
 
 import axios from "axios";
-
+//incidencia2
 export default {
   name: "inicio",
 
