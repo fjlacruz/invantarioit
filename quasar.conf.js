@@ -88,7 +88,6 @@ module.exports = function(ctx) {
     ssr: {
       pwa: false
     },
-
     // https://quasar.dev/quasar-cli/developing-pwa/configuring-pwa
     pwa: {
       // workboxPluginMode: 'InjectManifest',
