@@ -115,14 +115,13 @@ export default {
   }
 };
 // agregando test para dearrollo 2
-//haciendo cambios desde test2
-//probando ci
-//nuevos cambios con pull request
-//probando git lab
-//probando ci
 
-//probando gitlab
+//probando pull request
+
 
 ///probando segunda ci con node js
 //probando pr
+
+//agregando pr
+
 </script>
