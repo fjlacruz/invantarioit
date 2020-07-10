@@ -114,5 +114,5 @@ export default {
     }
   }
 };
-//resolviendo incidencia
+
 </script>
